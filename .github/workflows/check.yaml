@@ -1,0 +1,37 @@
+# GitHub Actions — PR check (replaces the Forgejo/Codeberg .forgejo/workflows/check.yaml).
+# Runs on a GitHub-hosted ubuntu runner with Docker (preinstalled, reliable).
+# It builds the resume-builder toolchain image once, then lints and builds the site
+# inside that same image — identical output to a local build.
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  # GitHub-hosted ubuntu has no SELinux; drop the bind-mount relabel (:z).
+  SELINUX_LABEL: ""
+  # Docker is preinstalled on GitHub-hosted runners (avoids rootless-Podman storage issues).
+  CONTAINER_ENGINE: docker
+
+jobs:
+  check:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Build toolchain image
+        run: make image
+
+      - name: Lint (shell, json, yaml, semgrep, secrets)
+        run: make lint
+
+      - name: Build site (no PDF)
+        # zola build also validates internal links + anchors
+        run: make site

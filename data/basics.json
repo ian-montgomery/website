@@ -1,0 +1,28 @@
+{
+  "name": "Ian Montgomery",
+  "label": "Infrastructure Engineer",
+  "image": "/assets/me.jpeg",
+  "email": "hello@ianmontgomery.dev",
+  "phone": "",
+  "country": "New Zealand",
+  "city": "Dunedin",
+  "details": [
+    {
+      "label": "Job status",
+      "value": "Currently employed"
+    }
+  ],
+  "socials": [
+    {
+      "label": "GitHub",
+      "icon": "fa6-brands:github",
+      "url": "https://github.com/ian-montgomery"
+    },
+    {
+      "label": "LinkedIn",
+      "icon": "fa6-brands:linkedin-in",
+      "url": "https://linkedin.com/in/ian-montgomery"
+    }
+  ],
+  "summary": "Infrastructure engineer with a background that spans both engineering and operations. I started in web development, spent six years running a multi-million-dollar retail operation, then came back to engineering. That time managing teams, handling competing priorities, and keeping operations running smoothly shaped how I approach building reliable platforms today. As the industry shifts toward agentic workflows, this background gives me a practical edge. I know how to break down complex problems, manage concurrent workstreams, and coordinate both people and AI agents to get things done."
+}

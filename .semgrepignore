@@ -1,0 +1,6 @@
+# Build toolchain image intentionally runs as root for package installation
+# and host-mounted volume writes. Not a security concern in this context.
+Dockerfile
+# Ignore generated build artifacts
+dist/
+static/

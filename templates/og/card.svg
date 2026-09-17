@@ -1,0 +1,28 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- 1-bit OpenGraph card: pure black (#000) and pure white (#fff) only. -->
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#fff" />
+
+  <!-- Portrait (1-bit PNG), square frame -->
+  <rect x="507" y="57" width="186" height="186" fill="#fff" stroke="#000" stroke-width="6" />
+  <image href="../../static/assets/portrait.png" x="510" y="60" width="180" height="180" preserveAspectRatio="xMidYMid meet" />
+
+  <!-- Title -->
+  <text x="600" y="330" font-family="DejaVu Sans Mono, Courier New, monospace" font-weight="bold" font-size="84" letter-spacing="-3" fill="#000" text-anchor="middle">IAN MONTGOMERY</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="400" font-family="DejaVu Sans Mono, Courier New, monospace" font-size="34" fill="#000" text-anchor="middle">&gt; INFRASTRUCTURE ENGINEER</text>
+
+  <!-- Bracketed domain label -->
+  <text x="600" y="460" font-family="DejaVu Sans Mono, Courier New, monospace" font-weight="bold" font-size="26" fill="#000" text-anchor="middle">[IANMONTGOMERY.DEV]</text>
+
+  <!-- Dithered divider strip (two offset dashed rules; no pattern support needed) -->
+  <rect x="0" y="553" width="1200" height="26" fill="#fff" />
+  <line x1="0" y1="562" x2="1200" y2="562" stroke="#000" stroke-width="6" stroke-dasharray="6 6" />
+  <line x1="0" y1="570" x2="1200" y2="570" stroke="#000" stroke-width="6" stroke-dasharray="6 6" stroke-dashoffset="6" />
+  <rect x="0" y="551" width="1200" height="3" fill="#000" />
+  <rect x="0" y="578" width="1200" height="3" fill="#000" />
+
+  <!-- Hard outer frame -->
+  <rect x="3" y="3" width="1194" height="624" fill="none" stroke="#000" stroke-width="6" />
+</svg>

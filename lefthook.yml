@@ -1,0 +1,36 @@
+# lefthook.yml
+# All checks delegate to `make` targets — see the Makefile for definitions.
+# Tools run inside the resume-builder Podman container (or semgrep/betterleaks images).
+
+pre-commit:
+  commands:
+    lint-shell:
+      glob: '*.sh'
+      run: make lint-shell
+
+    lint-json:
+      glob: '*.json'
+      run: make lint-json
+
+    lint-yaml:
+      glob: '*.{yaml,yml}'
+      run: make lint-yaml
+
+    lint-semgrep:
+      glob: '*.{js,json,md,yaml,yml}'
+      run: make lint-semgrep
+
+    lint-secrets:
+      run: make lint-secrets BETTERLEAKS_FLAGS="--pre-commit --staged"
+
+pre-push:
+  parallel: true
+  commands:
+    lint:
+      run: make lint
+
+    lint-secrets:
+      run: make lint-secrets
+
+    build-check:
+      run: make build
