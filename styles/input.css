@@ -137,8 +137,8 @@ html {
   /* Blinking terminal cursor (pure black/white toggle, no opacity). */
   .im-cursor {
     display: inline-block;
-    width: 0.6ch;
-    height: 1.1em;
+    width: 0.62em;
+    height: 1.05em;
     margin-left: 0.25ch;
     vertical-align: -0.18em;
     background-color: #000;
