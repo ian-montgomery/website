@@ -11,8 +11,33 @@
  * "Courier New" is the fallback.
  */
 
+/*
+ * Theme tokens. The palette is strictly two colours, so "dark mode" is the
+ * exact 1-bit inversion: ink and paper trade places. Everything — Tailwind
+ * utilities, dither art, cursor — resolves through these two variables.
+ */
 :root {
   color-scheme: light;
+  --im-ink: #000;
+  --im-paper: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --im-ink: #fff;
+    --im-paper: #000;
+  }
+
+  /* 1-bit artwork is ink-on-paper; invert it so it matches the flipped theme. */
+  .im-art-invert {
+    filter: invert(1);
+  }
+
+  /* The portrait stays un-inverted; a white border frames it on the black page. */
+  .im-portrait {
+    border-color: #fff;
+  }
 }
 
 html {
@@ -28,19 +53,19 @@ html {
     @apply underline underline-offset-4;
   }
 
-  /* Selection and placeholders stay strictly black-on-white. */
+  /* Selection and placeholders stay strictly ink-on-paper. */
   ::selection {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--im-ink);
+    color: var(--im-paper);
   }
 
   ::placeholder {
-    color: #000;
+    color: var(--im-ink);
   }
 
   /* Visible, high-contrast keyboard focus in the same 1-bit language. */
   :focus-visible {
-    outline: 3px solid #000;
+    outline: 3px solid var(--im-ink);
     outline-offset: 2px;
   }
 }
@@ -127,28 +152,28 @@ html {
    */
   .im-dither {
     height: 0.5rem;
-    background-color: #fff;
-    background-image: repeating-linear-gradient(45deg, #000 0 2px, transparent 2px 4px),
-      repeating-linear-gradient(-45deg, #000 0 2px, transparent 2px 4px);
-    border-top: 2px solid #000;
-    border-bottom: 2px solid #000;
+    background-color: var(--im-paper);
+    background-image: repeating-linear-gradient(45deg, var(--im-ink) 0 2px, transparent 2px 4px),
+      repeating-linear-gradient(-45deg, var(--im-ink) 0 2px, transparent 2px 4px);
+    border-top: 2px solid var(--im-ink);
+    border-bottom: 2px solid var(--im-ink);
   }
 
-  /* Blinking terminal cursor (pure black/white toggle, no opacity). */
+  /* Blinking terminal cursor (pure ink/paper toggle, no opacity). */
   .im-cursor {
     display: inline-block;
     width: 0.62em;
     height: 1.05em;
-    margin-left: 0.25ch;
+    margin-left: 1ch;
     vertical-align: -0.18em;
-    background-color: #000;
+    background-color: var(--im-ink);
     animation: im-blink 1s steps(1, end) infinite;
   }
 
   @keyframes im-blink {
     0%,
     49.99% {
-      background-color: #000;
+      background-color: var(--im-ink);
     }
     50%,
     100% {
@@ -159,7 +184,7 @@ html {
   @media (prefers-reduced-motion: reduce) {
     .im-cursor {
       animation: none;
-      background-color: #000;
+      background-color: var(--im-ink);
     }
   }
 }
@@ -168,6 +193,17 @@ html {
 @media print {
   @page {
     margin: 12mm;
+  }
+
+  /* Printing always uses the light theme, regardless of the device setting. */
+  :root {
+    color-scheme: light;
+    --im-ink: #000;
+    --im-paper: #fff;
+  }
+
+  .im-art-invert {
+    filter: none !important;
   }
 
   html,

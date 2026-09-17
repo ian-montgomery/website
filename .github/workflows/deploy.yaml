@@ -7,8 +7,10 @@
 # - CLOUDFLARE_API_TOKEN  : Cloudflare API token with "Cloudflare Pages: Edit" permissions
 # - CLOUDFLARE_ACCOUNT_ID : Cloudflare Account ID
 #
-# Optional repository variables/secrets:
-# - CLOUDFLARE_PROJECT_NAME : Pages project name (defaults to "resume")
+# Required repository variable (Settings → Secrets and variables → Actions → Variables):
+# - CLOUDFLARE_PROJECT_NAME : target Pages project name.
+#   There is intentionally no default: when unset the deploy is skipped so a
+#   stale project is never targeted. Set it to the new Pages project name.
 name: Deploy
 
 permissions:
@@ -42,6 +44,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PROJECT_NAME: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
 
     steps:
       - name: Checkout
@@ -54,15 +58,18 @@ jobs:
           make site
 
       - name: Deploy to Cloudflare Pages
-        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != '' && env.CLOUDFLARE_PROJECT_NAME != '' }}
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0  # v4.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PROJECT_NAME || secrets.CLOUDFLARE_PROJECT_NAME || 'resume' }} --branch=main
+          command: pages deploy dist --project-name=${{ env.CLOUDFLARE_PROJECT_NAME }} --branch=main
 
-      - name: Skip deploy when Cloudflare credentials not configured
-        if: ${{ env.CLOUDFLARE_API_TOKEN == '' }}
+      - name: Skip deploy when Cloudflare is not configured
+        if: ${{ env.CLOUDFLARE_API_TOKEN == '' || env.CLOUDFLARE_ACCOUNT_ID == '' || env.CLOUDFLARE_PROJECT_NAME == '' }}
         run: |
-          echo "CLOUDFLARE_API_TOKEN secret is empty — skipping deploy steps."
-          echo "Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in repository secrets to enable deployment."
+          echo "Cloudflare deploy skipped: incomplete configuration."
+          echo "Configure these in the repository before deploying to the new Pages project:"
+          echo "  variable CLOUDFLARE_PROJECT_NAME (target Pages project name)"
+          echo "  secret   CLOUDFLARE_API_TOKEN  (Cloudflare Pages: Edit)"
+          echo "  secret   CLOUDFLARE_ACCOUNT_ID (Cloudflare Account ID)"
