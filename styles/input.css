@@ -1,0 +1,271 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/*
+ * 1-bit / early-Macintosh layer.
+ *
+ * Strictly black (#000) and white (#fff). No grays, no color, no radius,
+ * no shadows, no gradients — except the CSS-built dither dividers below.
+ * "IBM Plex Mono" is loaded from Google Fonts in templates/base.html;
+ * "Courier New" is the fallback.
+ */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+@layer base {
+  body {
+    @apply bg-white font-mono text-black;
+  }
+
+  a {
+    @apply underline underline-offset-4;
+  }
+
+  /* Selection and placeholders stay strictly black-on-white. */
+  ::selection {
+    background-color: #000;
+    color: #fff;
+  }
+
+  ::placeholder {
+    color: #000;
+  }
+
+  /* Visible, high-contrast keyboard focus in the same 1-bit language. */
+  :focus-visible {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Section heading: hard rule under uppercase tracked type. */
+  .im-heading {
+    @apply border-b-4 border-black pb-2 text-base font-bold uppercase tracking-[0.25em] sm:text-lg;
+  }
+
+  /* Terminal-style "KEY: value" line. */
+  .im-term {
+    @apply flex flex-wrap gap-x-2 text-xs uppercase tracking-wide sm:text-sm;
+  }
+
+  .im-term__key {
+    @apply font-bold;
+  }
+
+  /* Bracketed contact label with instant inversion. */
+  .im-link {
+    @apply font-bold uppercase tracking-wide hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
+  }
+
+  /* Early-Mac window block: 3px frame + black title bar. */
+  .im-window {
+    @apply border-[3px] border-black bg-white;
+  }
+
+  .im-window__bar {
+    @apply flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b-[3px] border-black bg-black px-3 py-2 text-white;
+  }
+
+  .im-window__title {
+    @apply text-sm font-bold uppercase tracking-wide sm:text-base;
+  }
+
+  .im-window__title a {
+    @apply font-bold text-white underline underline-offset-4 hover:bg-white hover:text-black focus-visible:bg-white focus-visible:text-black;
+  }
+
+  .im-window__dates {
+    @apply text-xs tracking-wide sm:text-sm;
+  }
+
+  .im-window__body {
+    @apply p-4 sm:p-5;
+  }
+
+  /* Flat bordered box (skills columns, certifications). */
+  .im-panel {
+    @apply border-[3px] border-black bg-white p-4;
+  }
+
+  /* Square skill chip. */
+  .im-chip {
+    @apply inline-flex items-stretch border-2 border-black bg-white text-xs sm:text-sm;
+  }
+
+  .im-chip__label {
+    @apply px-2 py-1 font-bold uppercase tracking-wide hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
+  }
+
+  .im-chip__info {
+    @apply border-l-2 border-black px-1.5 py-1 font-bold hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
+  }
+
+  /* Square bullet list for duties. */
+  .im-list {
+    @apply list-[square] pl-5 text-sm leading-relaxed;
+  }
+}
+
+@layer utilities {
+  /* Dithered portrait/logo artwork. */
+  .im-pixelated {
+    image-rendering: pixelated;
+  }
+
+  /*
+   * Checkerboard/dither divider strip, built entirely in CSS.
+   * Two opposing repeating-linear-gradients cross-hatch into an Atkinson-ish
+   * dither pattern; nothing here introduces a gray or a color.
+   */
+  .im-dither {
+    height: 0.5rem;
+    background-color: #fff;
+    background-image: repeating-linear-gradient(45deg, #000 0 2px, transparent 2px 4px),
+      repeating-linear-gradient(-45deg, #000 0 2px, transparent 2px 4px);
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+  }
+
+  /* Blinking terminal cursor (pure black/white toggle, no opacity). */
+  .im-cursor {
+    display: inline-block;
+    width: 0.6ch;
+    height: 1.1em;
+    margin-left: 0.25ch;
+    vertical-align: -0.18em;
+    background-color: #000;
+    animation: im-blink 1s steps(1, end) infinite;
+  }
+
+  @keyframes im-blink {
+    0%,
+    49.99% {
+      background-color: #000;
+    }
+    50%,
+    100% {
+      background-color: transparent;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .im-cursor {
+      animation: none;
+      background-color: #000;
+    }
+  }
+}
+
+/* --- Print: clean one-page black-and-white resume ------------------------- */
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 8.5pt;
+    line-height: 1.3;
+  }
+
+  /* Decorative-only elements disappear. */
+  .im-dither,
+  .im-cursor,
+  .im-screen-only {
+    display: none !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  /* Drop the page shell frame and reclaim its padding for the page. */
+  main {
+    border-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Compact every stacked gap so the resume fits on a single page. */
+  .im-window__body,
+  .im-panel {
+    padding: 4pt 6pt !important;
+  }
+
+  .im-window__bar {
+    padding: 2pt 6pt !important;
+  }
+
+  .im-heading {
+    margin-bottom: 4pt !important;
+  }
+
+  .im-window + .im-window,
+  .im-panel + .im-panel {
+    margin-top: 6pt !important;
+  }
+
+  .mt-2,
+  .mt-3,
+  .mt-4,
+  .mt-5,
+  .mt-6,
+  .mt-8,
+  .my-8 {
+    margin-top: 0 !important;
+  }
+
+  p,
+  dl,
+  ul,
+  li,
+  dd,
+  dt {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .grid {
+    gap: 4pt !important;
+  }
+
+  /* Keep each role/degree intact on one page. */
+  .im-window,
+  .im-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border-width: 2px !important;
+  }
+
+  .im-window__bar {
+    border-bottom-width: 2px !important;
+    /* Force the inverted title bar to actually print. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .im-heading {
+    border-bottom-width: 2px !important;
+  }
+
+  /* The Nth column boxes sit side by side on screen; stack them for print. */
+  .im-panel {
+    border-width: 2px !important;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+}

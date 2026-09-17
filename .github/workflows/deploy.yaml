@@ -1,0 +1,68 @@
+# GitHub Actions — deploy to Cloudflare Pages.
+# Builds on a GitHub-hosted ubuntu runner with Docker, then publishes dist/ to
+# Cloudflare Pages. The PDF is deliberately never built by `make site` and is
+# workstation-local only.
+#
+# Repository secrets:
+# - CLOUDFLARE_API_TOKEN  : Cloudflare API token with "Cloudflare Pages: Edit" permissions
+# - CLOUDFLARE_ACCOUNT_ID : Cloudflare Account ID
+#
+# Optional repository variables/secrets:
+# - CLOUDFLARE_PROJECT_NAME : Pages project name (defaults to "resume")
+name: Deploy
+
+permissions:
+  contents: read
+  deployments: write
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'data/**'
+      - 'static/**'
+      - 'styles/**'
+      - 'templates/**'
+      - 'config.toml'
+      - 'tailwind.config.js'
+      - 'Dockerfile'
+      - 'Makefile'
+      - '.github/workflows/deploy.yaml'
+
+env:
+  # GitHub-hosted ubuntu has no SELinux; drop the bind-mount relabel (:z).
+  SELINUX_LABEL: ""
+  # Docker is preinstalled on GitHub-hosted runners (avoids rootless-Podman storage issues).
+  CONTAINER_ENGINE: docker
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy Site
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Build static site (CSS, HTML, OG card, Markdown CV — no PDF)
+        run: |
+          set -euo pipefail
+          make image
+          make site
+
+      - name: Deploy to Cloudflare Pages
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0  # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PROJECT_NAME || secrets.CLOUDFLARE_PROJECT_NAME || 'resume' }} --branch=main
+
+      - name: Skip deploy when Cloudflare credentials not configured
+        if: ${{ env.CLOUDFLARE_API_TOKEN == '' }}
+        run: |
+          echo "CLOUDFLARE_API_TOKEN secret is empty — skipping deploy steps."
+          echo "Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in repository secrets to enable deployment."

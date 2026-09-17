@@ -1,0 +1,128 @@
+[
+  {
+    "id": "xero",
+    "title": "Engineer - Infrastructure",
+    "organization": "Xero",
+    "org_url": "https://www.xero.com/",
+    "image": "/assets/xero.jpg",
+    "start": "2023-12-01",
+    "end": null,
+    "employment_type": "Full-time",
+    "work_model": "Hybrid",
+    "location": "Wellington",
+    "skills": ["go", "kotlin", "terraform", "typescript", "ruby", "react", "dotnet", "helm", "docker", "kubernetes", "github-actions", "teamcity", "octopus-deploy", "aws", "sql", "grafana", "new-relic", "sumologic"],
+    "bullets": [
+      "Build CI/CD automation and reproducible testing environments using Docker, Helm, and Kubernetes on AWS.",
+      "Lead incident response and on-call support, working with Grafana, New Relic, and Sumo Logic.",
+      "Implement synthetic monitoring to catch pipeline issues before they reach product teams."
+    ],
+    "bullets_pdf": [
+      "Significantly reduced automated test environment failure rates through targeted stability improvements.",
+      "Built and maintained CI/CD pipelines using GitHub Actions, TeamCity, and Octopus Deploy for services in Go, Kotlin, TypeScript, Ruby, and .NET.",
+      "Designed reproducible testing environments using Docker, Helm, and Kubernetes on AWS.",
+      "Implemented synthetic monitoring for path-to-production environments, catching pipeline issues before they reached product teams.",
+      "Led incident response and post-incident reviews; provided on-call support using Grafana, New Relic, and Sumo Logic.",
+      "Documented CI/CD pipelines, system architecture, and operational runbooks."
+    ]
+  },
+  {
+    "id": "endgame",
+    "title": "DevOps Engineer",
+    "organization": "EndGame",
+    "org_url": "https://www.end-game.com/",
+    "image": "/assets/endgame.jpg",
+    "start": "2021-11-01",
+    "end": "2023-11-01",
+    "employment_type": "Full-time",
+    "work_model": "Hybrid",
+    "location": "Wellington",
+    "skills": ["terraform", "azure", "aws", "gitlab", "octopus-deploy", "datadog", "dotnet", "sql"],
+    "bullets": [
+      "Lifecycle Lead for multiple .NET SaaS products, owning operations across development and production.",
+      "Built CI/CD pipelines and managed Azure and AWS infrastructure using Terraform.",
+      "Authored security policies and configured access controls supporting ISO 27001 certification."
+    ],
+    "bullets_pdf": [
+      "Served as Lifecycle Lead for multiple .NET SaaS products, owning operations across development and production environments.",
+      "Provisioned and managed Azure and AWS infrastructure using Terraform.",
+      "Built CI/CD pipelines with GitLab, Octopus Deploy, and Azure DevOps.",
+      "Drove incident response and observability using Datadog and Azure Application Insights.",
+      "Authored security policies and configured access controls supporting ISO 27001 certification.",
+      "Provided on-call .NET production support and partnered with developers on debugging.",
+      "Documented CI/CD processes and system architecture."
+    ]
+  },
+  {
+    "id": "epi",
+    "title": "Operations Manager & Junior Full-Stack Developer",
+    "organization": "Epi-interactive",
+    "org_url": "https://epi-interactive.com/",
+    "image": "/assets/epi.jpg",
+    "start": "2021-03-01",
+    "end": "2021-11-01",
+    "employment_type": "Full-time",
+    "work_model": "On-site",
+    "location": "Wellington",
+    "skills": ["r-shiny", "leadership", "project-management", "data-visualization", "aws"],
+    "bullets": [
+      "Led a team of 4 developers and 2 designers while contributing as a developer.",
+      "Led delivery of an interactive dashboard for a university research center, helping researchers explore global democracy data.",
+      "Managed hiring, performance reviews, and operational strategy with company directors."
+    ],
+    "bullets_pdf": [
+      "Hired on a fixed-term contract to scale operations during company growth, leading a team of 4 developers and 2 designers.",
+      "Led delivery of an interactive dashboard for a university research center, helping researchers explore global democracy data.",
+      "Ran hiring and performance reviews across the team.",
+      "Partnered with company directors on operational strategy to expand client capacity."
+    ]
+  },
+  {
+    "id": "commonsense",
+    "title": "Manager / Assistant Manager",
+    "organization": "Commonsense",
+    "org_url": "https://commonsenseorganics.co.nz/",
+    "image": "/assets/commonsense.jpg",
+    "start": "2014-07-01",
+    "end": "2020-08-01",
+    "employment_type": "Full-time",
+    "work_model": "On-site",
+    "location": "Wellington",
+    "skills": ["leadership", "project-management", "sales"],
+    "bullets": [
+      "Managed a flagship supermarket and online delivery service across 5 departments, leading a large retail team.",
+      "Managed store P&L and consistently met head office targets.",
+      "Scaled online delivery 10x during the pandemic."
+    ],
+    "bullets_pdf": [
+      "Managed a flagship supermarket and online delivery service, leading a large team across 5 departments.",
+      "Developed a layer of department managers who ran their own staff, enabling the store to grow sales and maintain service standards while holding wages within budget.",
+      "Ran monthly P&L reporting for a high-volume retail operation, using the data to shape store strategy and consistently hit or exceed head office targets.",
+      "Scaled the online delivery service through a 10x demand increase during the pandemic.",
+      "Promoted from Assistant Manager to Manager in 2018."
+    ]
+  },
+  {
+    "id": "racine",
+    "title": "Webmaster",
+    "organization": "Racine International",
+    "organization_pdf": "Racine International (formerly Racine Industries)",
+    "org_url": "https://www.racineintl.com/",
+    "image": "/assets/racine.png",
+    "start": "2009-08-01",
+    "end": "2012-11-01",
+    "employment_type": "Full-time",
+    "work_model": "On-site",
+    "location": "Racine, Wisconsin - USA",
+    "skills": ["wordpress", "php", "html", "css", "mysql"],
+    "bullets": [
+      "Designed and built corporate websites using WordPress, PHP, HTML, CSS, and MySQL.",
+      "Launched the company's social media marketing strategy and managed content across multiple platforms.",
+      "Produced marketing and training videos for customers, including on-site shoots for enterprise clients."
+    ],
+    "bullets_pdf": [
+      "Designed and built corporate websites on the WordPress platform.",
+      "Launched the company's social media marketing strategy and managed content across multiple platforms.",
+      "Produced marketing and training videos for customers, including on-site shoots for enterprise clients."
+    ]
+  }
+]
