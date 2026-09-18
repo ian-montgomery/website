@@ -41,10 +41,6 @@
           <dt>Email:</dt>
           <dd><a href="mailto:{{ basics.email }}">{{ basics.email }}</a></dd>
         </div>
-        <div class="im-card__row">
-          <dt>Resume:</dt>
-          <dd><a href="/resume">/resume</a></dd>
-        </div>
         {% for social in basics.socials %}
         <div class="im-card__row">
           <dt>{{ social.label }}:</dt>
@@ -53,6 +49,10 @@
           </dd>
         </div>
         {% endfor %}
+        <div class="im-card__row">
+          <dt>Resume:</dt>
+          <dd><a href="/resume">/resume</a></dd>
+        </div>
       </dl>
     </section>
 
