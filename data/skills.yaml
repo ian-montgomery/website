@@ -2,12 +2,12 @@ categories:
   - id: lang
     name: Languages
     skills:
+      - bash
       - csharp
       - go
       - kotlin
       - python
       - powershell
-      - bash
       - terraform
       - typescript
   - id: devops

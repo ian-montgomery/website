@@ -1,7 +1,6 @@
 # ianmontgomery.net
 
-Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net): a
-1-bit digital business card at `/` and a full resume at `/resume/`.
+Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net)
 
 ## Stack
 
