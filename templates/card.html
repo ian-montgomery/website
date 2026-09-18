@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }}{% endblock title %}
+{% block description %}{{ section.description }}{% endblock description %}
+{% block og_title %}{{ section.title }}{% endblock og_title %}
+{% block og_description %}{{ section.description }}{% endblock og_description %}
+{% block body_class %} im-card-page{% endblock body_class %}
+
+{% block content %}
+{% set basics = load_data(path="data/basics.json") %}
+
+{#
+  Digital business card. Reimplemented from the standalone ianmontgomery.net
+  index.html in the existing 1-bit design system (see styles/input.css).
+  The portrait is ink-on-paper artwork and stays un-inverted in dark mode;
+  `im-portrait` swaps its 3px frame to white instead.
+#}
+<main id="main" class="im-card-stage im-crisp">
+  <div class="im-card">
+    <header>
+      <img
+        src="/assets/portrait.png"
+        alt="Black-and-white dithered portrait of {{ basics.name }}"
+        width="128"
+        height="128"
+        class="im-card__portrait im-pixelated im-portrait"
+      />
+
+      <h1 class="im-card__name">{{ basics.name }}</h1>
+
+      <p class="im-card__role">&gt; {{ basics.label | upper }}<span class="im-cursor" aria-hidden="true"></span></p>
+    </header>
+
+    <div class="im-dither w-full" aria-hidden="true"></div>
+
+    <section class="im-card__contact" aria-labelledby="contact-heading">
+      <h2 class="im-card__contact-head" id="contact-heading">Contact</h2>
+
+      <dl class="im-card__rows">
+        <div class="im-card__row">
+          <dt>Email:</dt>
+          <dd><a href="mailto:{{ basics.email }}">{{ basics.email }}</a></dd>
+        </div>
+        <div class="im-card__row">
+          <dt>Resume:</dt>
+          <dd><a href="/resume">/resume</a></dd>
+        </div>
+        {% for social in basics.socials %}
+        <div class="im-card__row">
+          <dt>{{ social.label }}:</dt>
+          <dd>
+            <a href="{{ social.url | safe }}" target="_blank" rel="me noopener noreferrer">{{ social.url | replace(from="https://", to="") }}</a>
+          </dd>
+        </div>
+        {% endfor %}
+      </dl>
+    </section>
+
+    <footer class="im-card__foot">
+      <p>&copy; IM {{ now() | date(format="%Y") }} &middot; All rights reserved</p>
+    </footer>
+  </div>
+</main>
+{% endblock content %}

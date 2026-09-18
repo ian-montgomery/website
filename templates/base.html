@@ -3,12 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ config.title }}</title>
-    <meta name="description" content="{{ config.description }}" />
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="{{ current_url | safe }}" />
-    <meta property="og:title" content="{{ config.title }}" />
-    <meta property="og:description" content="{{ config.extra.og_description | default(value=config.description) }}" />
+    <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock og_title %}" />
+    <meta property="og:description" content="{% block og_description %}{{ config.extra.og_description | default(value=config.description) }}{% endblock og_description %}" />
     <meta property="og:image" content="{{ config.base_url | safe }}/generated/og/index.png" />
     <meta property="og:url" content="{{ current_url | safe }}" />
     <meta property="og:type" content="website" />
@@ -23,7 +25,7 @@
     <link rel="stylesheet" href="/styles.css" />
     <script src="/js/app.js" defer></script>
   </head>
-  <body class="bg-white font-mono text-black antialiased">
+  <body class="bg-white font-mono text-black antialiased{% block body_class %}{% endblock body_class %}">
     <a
       href="#main"
       class="im-screen-only sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:border-2 focus:border-black focus:bg-black focus:px-3 focus:py-2 focus:font-bold focus:text-white"
