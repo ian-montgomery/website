@@ -1,144 +1,34 @@
-# Ian Montgomery — Infrastructure Engineer
+# ianmontgomery.net
 
-My personal site at [ianmontgomery.net](https://ianmontgomery.net), hosted on
-Cloudflare Pages. It combines two routes in one Zola build:
+Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net): a
+1-bit digital business card at `/` and a full resume at `/resume/`.
 
-- `/` — a 1-bit digital business card.
-- `/resume` — the full resume.
+Static site generated with [Zola](https://www.getzola.org/) and Tailwind CSS,
+deployed to Cloudflare Pages. The whole toolchain runs in a single container
+image (`resume-builder`) — no Node.js or `node_modules`.
 
-The PDF and Markdown CV are **local-only artifacts**: they are generated on a
-workstation and are never deployed.
+## Build
 
-
-## Tech Stack
-
-- **Framework**: Zola (static site generator, Tera templates)
-- **Styling**: TailwindCSS (standalone CLI — no Node.js)
-- **PDF**: Typst; **OG card**: resvg
-- **Toolchain**: 100% containerized in a single `resume-builder` container image (`Dockerfile`) — Zola, Typst, resvg, and the Tailwind standalone CLI. No Node.js, no `node_modules`.
-- **Hosting**: Cloudflare Pages (free tier)
-- **DNS / CDN**: Cloudflare
-- **CI/CD**: GitHub Actions — builds the site in the `resume-builder` container, then deploys `dist/` to Cloudflare Pages via Wrangler
-- **Deps**: Dependabot (`.github/dependabot.yml`) for GitHub Actions and Docker base image updates
-
-Resume data lives in `data/*.json` (single source of truth) and is consumed by the
-website (`templates/resume.html` and `templates/card.html`), the Markdown CV
-(`templates/cv.md`), and the PDF (`templates/pdf/resume.typ`) alike. The phone
-number is **not** committed: it is read from `RESUME_PHONE` in a gitignored `.env`
-via the generated `local/private.json` (see `.env.example`).
-
-### Routes & structure
-
-- `content/_index.md` (`template = "card.html"`) → `/` — the digital business card.
-- `content/resume.md` (`template = "resume.html"`) → `/resume/` — the resume.
-- The PDF and Markdown CV are local-only artifacts and are never deployed. The
-  Markdown CV page source lives at `local/cv.md`; `make markdown` stages it into
-  `content/cv.md` for a local-only Zola build with `local/cv-config.toml`, then
-  removes it, so the deployed `dist/` never contains the route.
-
-This repo is the source of truth for ianmontgomery.net; the standalone
-`ianmontgomery.net` repo is retired. `deploy.yaml` publishes `dist/` to the
-Cloudflare Pages project named by the `CLOUDFLARE_PROJECT_NAME` repository
-variable (set it to the existing ianmontgomery.net project).
-
-## Development
-
-All builds run inside the `resume-builder` container — the only host
-requirement is Docker or Podman and `make`.
+Requires Docker or Podman and `make`:
 
 ```bash
-# Build the toolchain image (also runs automatically as part of dev/build)
-make image
-
-# Start the live-reloading dev server at http://localhost:4321
-make dev
-
-# Build the deployable site (CSS, HTML, OG card) into dist/
-make site
-
-# Full local build — everything in `site` PLUS the PDF resume and Markdown CV.
-# The PDF and Markdown CV are generated locally only: they are never built in
-# CI/CD and never published to Cloudflare Pages.
-make build
-
-# Generate just the local Markdown CV into generated/markdown/
-make markdown
+make site    # deployable site (CSS, HTML, OG card) into dist/
+make dev     # live-reloading dev server at http://localhost:4321
+make build   # site + local-only PDF and Markdown CV
+make lint    # shell, JSON, YAML, and SAST checks
 ```
 
-To include your phone number in the locally generated PDF and Markdown CV, copy
-`.env.example` to `.env` and set `RESUME_PHONE`. The `.env` file is gitignored;
-when it is absent (as in CI), the phone is simply omitted.
+The PDF and Markdown CV are generated locally only and are never deployed. To
+include a phone number in them, copy `.env.example` to `.env` and set
+`RESUME_PHONE`.
 
-See [`.github/workflows/deploy.yaml`](.github/workflows/deploy.yaml) for the deployment pipeline.
+## Structure
 
-## 1-bit redesign
+- `data/*.json` — resume content (single source of truth)
+- `content/` — page routes
+- `templates/` — Tera templates
+- `static/` — assets, headers, redirects
+- `styles/input.css` — Tailwind source
+- `Dockerfile` / `Makefile` — containerized build toolchain
 
-The site is restyled as a 1-bit / early-Macintosh design: strictly pure black
-(`#000`) and pure white (`#fff`), monospace type only, hard 2–4px borders, no
-border-radius, shadows, gradients, colors, grays, or animated transitions.
-The section order is unchanged: HEADER/BIO → SKILLS → WORK → EDUCATION.
-
-### Files changed
-
-- `templates/base.html` — IBM Plex Mono via Google Fonts (Courier New fallback),
-  skip link, per-route `title`/`description`/OG blocks, light/dark `theme-color`,
-  removed the theme toggle and the iconify runtime.
-- `templates/card.html` — the `/` digital business card: centred 34rem column,
-  128px dithered portrait, uppercase name, blinking terminal cursor role line,
-  dither divider, and a bordered contact box (email, resume, GitHub, LinkedIn).
-  On viewports at least 700px wide and 640px tall it is locked to the viewport
-  height with no page scroll, matching the original standalone card.
-- `templates/resume.html` — the `/resume` page: header/bio with blinking terminal
-  cursor, skills grid, and Mac-window blocks for work and education (black title
-  bar, dates right-aligned, logo, duties, caps skills separated by `/`).
-- `templates/macros.html` — square bordered skill chips (info popover preserved).
-- `templates/og/card.svg` — 1-bit OpenGraph card.
-- `styles/input.css` — 1-bit component layer, `steps()` blink cursor, CSS-only
-  dither dividers, focus-visible rules, print stylesheet.
-- `tailwind.config.js` — black/white palette only, monospace family, zero
-  radius/shadow, zero-duration transitions.
-- `static/js/app.js` — theme switcher removed; skill-chip popovers kept.
-- `static/_headers` — CSP updated for the Google Fonts hosts; iconify hosts dropped.
-- `static/favicon.svg` — 1-bit.
-
-`static/fonts/` still holds the old self-hosted Inter / JetBrains Mono files.
-They are no longer referenced and can be deleted if you keep the Google Fonts CDN.
-
-### Images
-
-- **Portrait** — `static/assets/portrait.png` (1-bit, 128×128) is rendered scaled up
-  with `image-rendering: pixelated`, so the hard pixel edges stay crisp. It carries
-  the `.im-pixelated` utility, which is *not* applied globally; swap the file to
-  change the portrait.
-- **Work / education logos** — the original full-color artwork in
-  `static/assets/` is used directly (`xero.jpg`, `endgame.jpg`, `epi.jpg`,
-  `commonsense.jpg`, `racine.png`, `umd.jpeg`, `dev_academy.jpeg`), referenced via
-  `data/*.json`.
-
-### Optional: 1-bit dithers
-
-If you later want dithered logos to match the portrait, convert them and point the
-`data/*.json` `image` fields at the results:
-
-```bash
-mkdir -p static/assets/dithered
-for img in static/assets/*.jpg static/assets/*.jpeg static/assets/*.png; do
-  [ -e "$img" ] || continue
-  name="$(basename "${img%.*}")"
-  magick "$img" \
-    -background white -alpha remove -alpha off \
-    -resize '128x128^' -gravity center -extent 128x128 \
-    -colorspace Gray -dither Riemersma -colors 2 -type bilevel \
-    "static/assets/dithered/${name}.png"
-done
-```
-
-ImageMagick has no built-in Atkinson dither; `Riemersma` (error diffusion) is the
-closest MacPaint-like look. Swap in `-dither FloydSteinberg` if you prefer.
-`-type bilevel` (with `-colors 2`) guarantees a true 1-bit PNG.
-
-### Verify
-
-```bash
-make site   # Tailwind + Zola (+ OG card, Markdown CV); no PDF
-```
+Deploys run from `.github/workflows/deploy.yaml` on push to `main`.
