@@ -11,12 +11,14 @@ static/styles.css
 # generated PDF resume — local-only artifact, never committed, never deployed
 generated
 
-# environment variables
-.env
-.env.production
+# environment variables (keep the committed template)
+.env*
+!.env.example
 
-# local-only CV data generated from .env (never committed)
-/local/private.json
+# local-only data; the tracked Markdown CV sources are re-included below
+/local/*
+!/local/cv.md
+!/local/cv-config.toml
 
 # local-only Markdown CV page, staged by `make markdown` and removed afterwards
 /content/cv.md
@@ -24,12 +26,16 @@ generated
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
+# editor/OS noise
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+Thumbs.db
 
 # AI tooling
 .claude/
 .antigravitycli/
-AGENTS.md
 opencode.json
 .kilo/
