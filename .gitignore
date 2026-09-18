@@ -15,6 +15,12 @@ generated
 .env
 .env.production
 
+# local-only CV data generated from .env (never committed)
+/local/private.json
+
+# local-only Markdown CV page, staged by `make markdown` and removed afterwards
+/content/cv.md
+
 # macOS-specific files
 .DS_Store
 

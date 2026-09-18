@@ -1,0 +1,10 @@
+# Local-only Zola config for generating the Markdown CV on a workstation.
+# Not used by `make site` / CI, so this route is never deployed. `make markdown`
+# stages content/cv.md (gitignored) for the duration of this build only.
+base_url = "https://ianmontgomery.net"
+title = "Ian Montgomery - Infrastructure Engineer"
+compile_sass = false
+build_search_index = false
+generate_feeds = false
+taxonomies = []
+output_dir = "generated/markdown-src"

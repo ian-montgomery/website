@@ -1,4 +1,5 @@
 {% set basics = load_data(path="data/basics.json") -%}
+{% set private = load_data(path="local/private.json") -%}
 {% set jobs = load_data(path="data/jobs.json") -%}
 {% set education = load_data(path="data/education.json") -%}
 {% set achievements = load_data(path="data/achievements.json") -%}
@@ -7,7 +8,7 @@
 
 **{{ basics.label }}**
 
-{{ basics.email }}{% if basics.phone %} · {{ basics.phone }}{% endif %} · {{ basics.city }}, {{ basics.country }}
+{{ basics.email }}{% if private.phone %} · {{ private.phone }}{% endif %} · {{ basics.city }}, {{ basics.country }}
 
 {% for social in basics.socials -%}
 - [{{ social.label }}]({{ social.url }})
