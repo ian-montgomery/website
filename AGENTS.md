@@ -21,7 +21,7 @@ For quick iteration on a change that touches only the site (no PDF/Markdown CV),
 `make site` plus `make lint` is sufficient before a final `make build`:
 
 ```bash
-make lint   # shell, JSON, YAML, semgrep SAST (CI-safe; secrets scan is local-only)
+make lint   # shell, YAML, semgrep SAST (CI-safe; secrets scan is local-only)
 make site   # CSS, HTML, OG card — what CI/CD builds
 ```
 
@@ -59,8 +59,8 @@ present, so the deployed `make site` build never includes it. Never wire the
 ### Lint targets
 
 `make lint` runs the CI-safe linters in sequence: `lint-shell` (ShellCheck on
-`scripts/`), `lint-json` (`jq empty` on `data/*.json`), `lint-yaml` (yamllint on
-`.github/workflows/` and `lefthook.yml`), and `lint-semgrep` (Semgrep SAST via
+`scripts/`), `lint-yaml` (yamllint on `data/`, `.github/workflows/` and
+`lefthook.yml`), and `lint-semgrep` (Semgrep SAST via
 the `semgrep/semgrep` image, `--config=auto --error`). `lint-secrets` runs
 Betterleaks (`scripts/betterleaks-scan.sh`) and is **local only, not CI** — it
 needs a git common-dir mount so it works in worktrees.
@@ -68,7 +68,7 @@ needs a git common-dir mount so it works in worktrees.
 ### Git hooks
 
 `lefthook.yml` wires the same checks into Git. `pre-commit` runs the shell,
-JSON, YAML, and Semgrep linters plus a staged Betterleaks scan; `pre-push` runs
+YAML, and Semgrep linters plus a staged Betterleaks scan; `pre-push` runs
 `make lint`, the full Betterleaks scan, and `make build`.
 
 ### Ignored artifacts
@@ -81,22 +81,24 @@ artifacts. `AGENTS.md` itself is tracked in Git.
 
 ## Content Model
 
-Resume data lives in `data/*.json` and is the single source of truth consumed by
-all outputs:
+Resume data lives in `data/*.yaml` and is the single source of truth consumed by
+all outputs. Dates are quoted strings (e.g. `"2023-12-01"`) so Zola, Tera, and
+Typst all treat them identically; unquoted YAML dates would be coerced to native
+timestamps by some parsers and change rendering.
 
-- `data/basics.json`, `data/jobs.json`, `data/education.json` — shared by
+- `data/basics.yaml`, `data/jobs.yaml`, `data/education.yaml` — shared by
   `templates/resume.html` (web resume, uses `bullets`) and
   `templates/card.html` (card route, uses `basics` only),
   `templates/cv.md` (Markdown CV, uses `bullets_pdf`), and
   `templates/pdf/resume.typ` (PDF, uses `bullets_pdf`)
-- `data/skills.json` — single skill registry keyed by slug (names/icons/urls/
+- `data/skills.yaml` — single skill registry keyed by slug (names/icons/urls/
   descriptions), plus ordered `categories` that group skill slugs for the resume
   Skills section. Jobs/education reference skills by slug; `templates/resume.html`,
   `templates/cv.md`, and `templates/pdf/resume.typ` resolve them against the
   registry. Every skill must be defined once and referenced by slug.
-- `data/achievements.json` — certifications (web resume and Markdown CV; not the PDF)
+- `data/achievements.yaml` — certifications (web resume and Markdown CV; not the PDF)
 
-The phone number is deliberately **not** in `data/basics.json`. It is supplied at
+The phone number is deliberately **not** in `data/basics.yaml`. It is supplied at
 build time from `RESUME_PHONE` in the gitignored `.env`, written to the gitignored
 `local/private.json` by `make private-data`, and read by `templates/cv.md` and
 `templates/pdf/resume.typ` (guarded, so it is simply omitted when unset). Never
@@ -110,7 +112,7 @@ use Tera (Zola's templating engine); see `templates/base.html`,
 `templates/card.html`, `templates/resume.html`, `templates/macros.html`, and
 `templates/og/card.svg`.
 
-If you edit `data/*.json`, validate it with `make lint-json` and verify all
+If you edit `data/*.yaml`, validate it with `make lint-yaml` and verify all
 template outputs still render (run `make build`).
 
 ## Environment & Containers
@@ -160,7 +162,7 @@ resume. This repo supersedes the standalone `ianmontgomery.net` repo.
 
 ## Common Workflows
 
-- **Edit resume content** → edit `data/*.json`, then `make lint-json` and `make build`
+- **Edit resume content** → edit `data/*.yaml`, then `make lint-yaml` and `make build`
   to confirm all outputs render.
 - **Update a pinned tool version** (Zola/Typst/resvg/Tailwind in `Dockerfile`) →
   bump both the version and the matching `*_SHA256`.

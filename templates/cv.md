@@ -1,9 +1,9 @@
-{% set basics = load_data(path="data/basics.json") -%}
+{% set basics = load_data(path="data/basics.yaml") -%}
 {% set private = load_data(path="local/private.json") -%}
-{% set jobs = load_data(path="data/jobs.json") -%}
-{% set education = load_data(path="data/education.json") -%}
-{% set achievements = load_data(path="data/achievements.json") -%}
-{% set skills = load_data(path="data/skills.json") -%}
+{% set jobs = load_data(path="data/jobs.yaml") -%}
+{% set education = load_data(path="data/education.yaml") -%}
+{% set achievements = load_data(path="data/achievements.yaml") -%}
+{% set skills = load_data(path="data/skills.yaml") -%}
 # {{ basics.name }}
 
 **{{ basics.label }}**

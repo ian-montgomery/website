@@ -2,15 +2,15 @@
 {% import "macros.html" as macros %}
 
 {% block content %}
-{% set basics = load_data(path="data/basics.json") %}
-{% set skills = load_data(path="data/skills.json") %}
-{% set jobs = load_data(path="data/jobs.json") %}
-{% set education = load_data(path="data/education.json") %}
-{% set achievements = load_data(path="data/achievements.json") %}
+{% set basics = load_data(path="data/basics.yaml") %}
+{% set skills = load_data(path="data/skills.yaml") %}
+{% set jobs = load_data(path="data/jobs.yaml") %}
+{% set education = load_data(path="data/education.yaml") %}
+{% set achievements = load_data(path="data/achievements.yaml") %}
 
 {#
   Dithered artwork lives alongside the originals in static/assets/dithered/.
-  The path is derived from the source image in data/*.json, e.g.
+  The path is derived from the source image in data/*.yaml, e.g.
   /assets/xero.jpg -> /assets/dithered/xero.png
   Swap the 128px placeholders for real Atkinson-dithered PNGs (see README).
 #}

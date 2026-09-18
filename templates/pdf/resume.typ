@@ -1,12 +1,12 @@
 #set page(paper: "a4", margin: (x: 1.5cm, top: 1.5cm, bottom: 1.5cm))
 #set text(font: "Liberation Sans", size: 9pt, fill: rgb("#1e293b"))
 
-// Single source of truth: data/*.json (shared with the website and Markdown CV)
-#let basics = json("/data/basics.json")
+// Single source of truth: data/*.yaml (shared with the website and Markdown CV)
+#let basics = yaml("/data/basics.yaml")
 #let private = json("/local/private.json")
-#let jobs = json("/data/jobs.json")
-#let education = json("/data/education.json")
-#let skills = json("/data/skills.json")
+#let jobs = yaml("/data/jobs.yaml")
+#let education = yaml("/data/education.yaml")
+#let skills = yaml("/data/skills.yaml")
 
 #let months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 #let fmt-date(iso) = {

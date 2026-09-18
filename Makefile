@@ -30,7 +30,7 @@ endif
 # to execute the tools directly (no nested podman). The PDF and the Markdown CV are
 # intentionally excluded from `site` — both are workstation-local artifacts and must
 # never be built in CI/CD or uploaded to Cloudflare Pages.
-.PHONY: help image dev build site css zola pdf og markdown private-data clean lint lint-shell lint-json lint-yaml lint-semgrep lint-secrets
+.PHONY: help image dev build site css zola pdf og markdown private-data clean lint lint-shell lint-yaml lint-semgrep lint-secrets
 
 help:
 	@echo "Available Makefile targets:"
@@ -45,10 +45,9 @@ help:
 	@echo "  make markdown - Generate Markdown CV locally into generated/ (not deployed)"
 	@echo "  make private-data - Write local/private.json from RESUME_PHONE in .env"
 	@echo "  make clean    - Remove build artifacts"
-	@echo "  make lint     - Run all CI-safe linters (shell, json, yaml, semgrep)"
+	@echo "  make lint     - Run all CI-safe linters (shell, yaml, semgrep)"
 	@echo "  make lint-shell - ShellCheck on scripts/"
-	@echo "  make lint-json  - Validate JSON in data/"
-	@echo "  make lint-yaml  - Lint YAML in .github/workflows/ and lefthook.yml"
+	@echo "  make lint-yaml  - Lint YAML in data/, .github/workflows/ and lefthook.yml"
 	@echo "  make lint-semgrep - Semgrep SAST on tracked source files"
 	@echo "  make lint-secrets - Betterleaks secret scan (local only, not CI)"
 
@@ -108,16 +107,13 @@ clean:
 
 # --- Lint targets (run inside the container, except semgrep which uses its own image) ---
 
-lint: lint-shell lint-json lint-yaml lint-semgrep
+lint: lint-shell lint-yaml lint-semgrep
 
 lint-shell:
 	$(CONTAINER_CMD) shellcheck scripts/*.sh
 
-lint-json:
-	$(CONTAINER_CMD) jq empty data/*.json
-
 lint-yaml:
-	$(CONTAINER_CMD) yamllint .github/workflows/ lefthook.yml
+	$(CONTAINER_CMD) yamllint .github/workflows/ lefthook.yml data/
 
 lint-semgrep:
 	$(CONTAINER_ENGINE) run --rm -v $(PWD):/src:z -w /src semgrep/semgrep:1.151.0 semgrep scan --config=auto --error

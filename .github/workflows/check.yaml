@@ -29,7 +29,7 @@ jobs:
       - name: Build toolchain image
         run: make image
 
-      - name: Lint (shell, json, yaml, semgrep, secrets)
+      - name: Lint (shell, yaml, semgrep)
         run: make lint
 
       - name: Build site (no PDF)

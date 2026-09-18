@@ -11,7 +11,7 @@ Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net): a
 - **Hosting**: Cloudflare Pages, deployed from GitHub Actions
 - **Toolchain**: a single container image (`resume-builder`) built from the `Dockerfile`; no Node.js or `node_modules`
 
-Resume content lives in `data/*.json` and is the single source of truth for the
+Resume content lives in `data/*.yaml` and is the single source of truth for the
 web resume, the local PDF, and the local Markdown CV.
 
 ## Build
@@ -22,7 +22,7 @@ Requires Docker or Podman and `make`:
 make site    # deployable site (CSS, HTML, OG card) into dist/
 make dev     # live-reloading dev server at http://localhost:4321
 make build   # site + local-only PDF and Markdown CV
-make lint    # shell, JSON, YAML, and SAST checks
+make lint    # shell, YAML, and SAST checks
 ```
 
 The PDF and Markdown CV are generated locally only and are never deployed. To
@@ -31,7 +31,7 @@ include a phone number in them, copy `.env.example` to `.env` and set
 
 ## Structure
 
-- `data/*.json` — resume content
+- `data/*.yaml` — resume content
 - `content/` — page routes
 - `templates/` — Tera templates
 - `static/` — assets, headers, redirects

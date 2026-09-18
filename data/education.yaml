@@ -1,0 +1,31 @@
+- id: dev-academy
+  title: Full Stack Web Development
+  institution: Dev Academy Aotearoa
+  inst_url: https://devacademy.co.nz/
+  image: /assets/dev_academy.jpeg
+  start: "2020-09-01"
+  end: "2020-12-01"
+  mode: Full-time
+  qualification: 80 Credits NZQA Level 6
+  skills:
+    - handlebars
+    - javascript
+    - react
+    - redux
+    - express
+  description: >-
+    Intensive software engineering curriculum covering JavaScript, Node.js, React, and relational databases, with practical grounding in test-driven development and agile team workflows.
+  minor: null
+- id: umd
+  title: Bachelor of Arts in English
+  institution: University of Minnesota - Duluth
+  inst_url: https://www.d.umn.edu/
+  image: /assets/umd.jpeg
+  start: "2004-09-01"
+  end: "2009-06-01"
+  mode: Full-time
+  minor: Film Studies
+  description: >-
+    Student Programming Director and on-air host at university radio station KUMD. Active in campus student publications and arts organisations.
+  qualification: null
+  skills: null

@@ -8,10 +8,6 @@ pre-commit:
       glob: '*.sh'
       run: make lint-shell
 
-    lint-json:
-      glob: '*.json'
-      run: make lint-json
-
     lint-yaml:
       glob: '*.{yaml,yml}'
       run: make lint-yaml

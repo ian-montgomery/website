@@ -1,0 +1,17 @@
+name: Ian Montgomery
+label: Infrastructure Engineer
+email: hello@ianmontgomery.net
+country: New Zealand
+city: Dunedin
+details:
+  - label: Job status
+    value: Currently employed
+socials:
+  - label: GitHub
+    icon: "fa6-brands:github"
+    url: https://github.com/ian-montgomery
+  - label: LinkedIn
+    icon: "fa6-brands:linkedin-in"
+    url: https://linkedin.com/in/ian-montgomery
+summary: >-
+  Infrastructure engineer with a practical foundation in cloud platforms, CI/CD automation, and production operations. Prior experience leading high-volume retail operations brings a disciplined approach to incident management, competing priorities, and team collaboration. Focused on building dependable testing environments, resilient deployment pipelines, and practical observability that helps engineering teams ship software with confidence.
