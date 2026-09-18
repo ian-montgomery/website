@@ -146,6 +146,15 @@ html {
   }
 
   /*
+   * Crisp, un-antialiased text for the 1-bit card. Scoped to the card wrapper
+   * so the resume page keeps the body's normal antialiasing.
+   */
+  .im-crisp {
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+  }
+
+  /*
    * Checkerboard/dither divider strip, built entirely in CSS.
    * Two opposing repeating-linear-gradients cross-hatch into an Atkinson-ish
    * dither pattern; nothing here introduces a gray or a color.
@@ -186,6 +195,139 @@ html {
       animation: none;
       background-color: var(--im-ink);
     }
+  }
+}
+
+/* --- Digital business card (route "/") ------------------------------------ */
+
+/*
+ * Reimplements the standalone ianmontgomery.net card in the same 1-bit
+ * language as the resume: ink/paper only, 3px frames, no radius or shadow.
+ * The card fills the viewport and is vertically centred.
+ */
+.im-card-stage {
+  @apply grid w-full place-items-center px-4 py-5;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.im-card {
+  @apply flex w-full max-w-[34rem] flex-col items-start gap-[18px];
+}
+
+.im-card__portrait {
+  display: block;
+  width: 128px;
+  height: 128px;
+  @apply border-[3px] border-black bg-white;
+}
+
+.im-card__name {
+  margin: 0;
+  @apply text-[clamp(2.75rem,13vw,5.5rem)] font-bold uppercase leading-[0.92] tracking-[-0.045em];
+}
+
+.im-card__role {
+  margin: 0;
+  @apply max-w-full text-[clamp(0.75rem,3.2vw,0.9rem)] font-bold uppercase tracking-[0.18em];
+}
+
+/* Wide enough for the role to sit on one line beside the cursor. */
+@media (min-width: 640px) {
+  .im-card__role {
+    letter-spacing: 0.22em;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.im-card__contact {
+  @apply w-full border-[3px] border-black bg-white;
+}
+
+.im-card__contact-head {
+  margin: 0;
+  @apply border-b-[3px] border-black bg-black px-3 py-[6px] text-[0.7rem] font-bold uppercase tracking-[0.24em] text-white;
+}
+
+.im-card__rows {
+  margin: 0;
+  @apply grid gap-2 p-3;
+}
+
+.im-card__row {
+  @apply grid grid-cols-[8ch_1fr] items-baseline gap-[1ch];
+}
+
+.im-card__row dt {
+  @apply text-xs font-bold uppercase tracking-[0.16em];
+}
+
+.im-card__row dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  @apply text-[0.9rem];
+}
+
+.im-card__contact a {
+  @apply decoration-2 underline-offset-4 hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
+}
+
+.im-card__foot {
+  margin: 0;
+  @apply text-[10px] uppercase leading-snug tracking-[0.14em];
+}
+
+.im-card__foot p {
+  margin: 0;
+}
+
+/*
+ * Original card viewport behaviour: on viewports at least 700px wide and
+ * 640px tall the card is locked to the viewport height with no page scroll;
+ * below that the page scrolls normally. Scoped to the card route.
+ */
+@media (min-width: 700px) and (min-height: 640px) {
+  body.im-card-page {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+}
+
+/* Stack contact rows on phones so labels and values never fight for width. */
+@media (max-width: 480px) {
+  .im-card__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .im-card__row dt {
+    margin-top: 2px;
+  }
+
+  .im-card__row dd {
+    padding-bottom: 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .im-card-stage {
+    padding: 14px 12px;
+  }
+
+  .im-card {
+    gap: 14px;
+  }
+
+  .im-card__portrait {
+    width: 96px;
+    height: 96px;
+  }
+
+  .im-card__role {
+    letter-spacing: 0.12em;
   }
 }
 

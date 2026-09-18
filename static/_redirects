@@ -1,2 +1,5 @@
-https://ianmontgomery.dev/* https://resume.ianmontgomery.net/:splat 301
-https://www.ianmontgomery.dev/* https://resume.ianmontgomery.net/:splat 301
+# ianmontgomery.dev -> ianmontgomery.net
+# Note: host-based rules may be ignored by Cloudflare Pages; if this redirect
+# must work, use a zone-level Redirect Rule instead.
+https://ianmontgomery.dev/* https://ianmontgomery.net/:splat 301
+https://www.ianmontgomery.dev/* https://ianmontgomery.net/:splat 301
