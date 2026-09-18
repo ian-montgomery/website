@@ -3,6 +3,7 @@
 
 // Single source of truth: data/*.json (shared with the website and Markdown CV)
 #let basics = json("/data/basics.json")
+#let private = json("/local/private.json")
 #let jobs = json("/data/jobs.json")
 #let education = json("/data/education.json")
 
@@ -26,7 +27,7 @@
   #text(size: 11pt, weight: "bold", fill: rgb("#0284c7"))[#basics.label] \
   #v(4pt)
   #text(size: 8.5pt, fill: rgb("#475569"))[
-    #basics.email #h(6pt) • #h(6pt) #basics.phone #h(6pt) • #h(6pt) #basics.city, #basics.country
+    #basics.email#if private.phone != "" [#h(6pt) • #h(6pt) #private.phone] #h(6pt) • #h(6pt) #basics.city, #basics.country
   ] \
   #v(2pt)
   #text(size: 8.5pt, fill: rgb("#0284c7"))[

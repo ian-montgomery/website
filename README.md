@@ -5,11 +5,10 @@ Cloudflare Pages. It combines two routes in one Zola build:
 
 - `/` — a 1-bit digital business card.
 - `/resume` — the full resume.
-- `/generated/markdown/ian-montgomery-cv.md` — the Markdown CV.
 
-## About Me
+The PDF and Markdown CV are **local-only artifacts**: they are generated on a
+workstation and are never deployed.
 
-Infrastructure Engineer at Xero, working across CI/CD automation, AWS, Kubernetes, and observability. Started in web development, then spent six years managing a high-volume retail operation before returning to engineering. That operational experience shapes how I approach reliability and cross-team communication.
 
 ## Tech Stack
 
@@ -24,14 +23,18 @@ Infrastructure Engineer at Xero, working across CI/CD automation, AWS, Kubernete
 
 Resume data lives in `data/*.json` (single source of truth) and is consumed by the
 website (`templates/resume.html` and `templates/card.html`), the Markdown CV
-(`templates/cv.md`), and the PDF (`templates/pdf/resume.typ`) alike.
+(`templates/cv.md`), and the PDF (`templates/pdf/resume.typ`) alike. The phone
+number is **not** committed: it is read from `RESUME_PHONE` in a gitignored `.env`
+via the generated `local/private.json` (see `.env.example`).
 
 ### Routes & structure
 
 - `content/_index.md` (`template = "card.html"`) → `/` — the digital business card.
 - `content/resume.md` (`template = "resume.html"`) → `/resume/` — the resume.
-- `content/cv.md` (`template = "cv.md"`) → `/generated/markdown/ian-montgomery-cv.md`.
-- The PDF is a local-only artifact and is never deployed.
+- The PDF and Markdown CV are local-only artifacts and are never deployed. The
+  Markdown CV page source lives at `local/cv.md`; `make markdown` stages it into
+  `content/cv.md` for a local-only Zola build with `local/cv-config.toml`, then
+  removes it, so the deployed `dist/` never contains the route.
 
 This repo is the source of truth for ianmontgomery.net; the standalone
 `ianmontgomery.net` repo is retired. `deploy.yaml` publishes `dist/` to the
@@ -50,14 +53,21 @@ make image
 # Start the live-reloading dev server at http://localhost:4321
 make dev
 
-# Build the deployable site (CSS, HTML, OG card, Markdown CV) into dist/
+# Build the deployable site (CSS, HTML, OG card) into dist/
 make site
 
-# Full local build — everything in `site` PLUS the PDF resume.
-# The PDF is generated locally only: it is never built in CI/CD and never
-# published to Cloudflare Pages.
+# Full local build — everything in `site` PLUS the PDF resume and Markdown CV.
+# The PDF and Markdown CV are generated locally only: they are never built in
+# CI/CD and never published to Cloudflare Pages.
 make build
+
+# Generate just the local Markdown CV into generated/markdown/
+make markdown
 ```
+
+To include your phone number in the locally generated PDF and Markdown CV, copy
+`.env.example` to `.env` and set `RESUME_PHONE`. The `.env` file is gitignored;
+when it is absent (as in CI), the phone is simply omitted.
 
 See [`.github/workflows/deploy.yaml`](.github/workflows/deploy.yaml) for the deployment pipeline.
 
