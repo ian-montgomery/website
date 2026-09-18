@@ -3,9 +3,16 @@
 Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net): a
 1-bit digital business card at `/` and a full resume at `/resume/`.
 
-Static site generated with [Zola](https://www.getzola.org/) and Tailwind CSS,
-deployed to Cloudflare Pages. The whole toolchain runs in a single container
-image (`resume-builder`) — no Node.js or `node_modules`.
+## Stack
+
+- **Framework**: [Zola](https://www.getzola.org/) (static site generator, Tera templates)
+- **Styling**: Tailwind CSS (standalone CLI — no Node.js)
+- **PDF / OG card**: Typst / resvg
+- **Hosting**: Cloudflare Pages, deployed from GitHub Actions
+- **Toolchain**: a single container image (`resume-builder`) built from the `Dockerfile`; no Node.js or `node_modules`
+
+Resume content lives in `data/*.json` and is the single source of truth for the
+web resume, the local PDF, and the local Markdown CV.
 
 ## Build
 
@@ -24,7 +31,7 @@ include a phone number in them, copy `.env.example` to `.env` and set
 
 ## Structure
 
-- `data/*.json` — resume content (single source of truth)
+- `data/*.json` — resume content
 - `content/` — page routes
 - `templates/` — Tera templates
 - `static/` — assets, headers, redirects
