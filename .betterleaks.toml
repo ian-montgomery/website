@@ -2,9 +2,6 @@
 [extend]
 useDefault = true
 
-# The Forgejo Releases public GPG signing-key fingerprint is committed on purpose
-# (infra/setup.sh, infra/install-runner.sh) to verify Forgejo downloads. It is a
-# PUBLIC value, not a credential, so suppress the generic-api-key false positive.
+
 [[allowlists]]
-description = "Forgejo Releases public GPG signing-key fingerprint (not a secret)"
-regexes = ['''EB114F5E6C0DC2BCDD183550A4B61A2DC5923710''']
+

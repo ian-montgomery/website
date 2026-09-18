@@ -6,6 +6,7 @@
 #let private = json("/local/private.json")
 #let jobs = json("/data/jobs.json")
 #let education = json("/data/education.json")
+#let skills = json("/data/skills.json")
 
 #let months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 #let fmt-date(iso) = {
@@ -41,6 +42,19 @@
 // Summary
 #v(6pt)
 #text(size: 8.5pt, fill: rgb("#334155"))[#basics.summary]
+
+// Skills
+#v(10pt)
+#text(weight: "black", size: 12pt, fill: rgb("#0f172a"))[Skills]
+#v(4pt)
+
+#for cat in skills.categories [
+  #block[
+    #text(weight: "bold", size: 9pt)[#cat.name:] #h(4pt)
+    #text(size: 8.5pt)[#cat.skills.map(s => skills.skills.at(s, default: (name: s)).name).join(" · ")]
+  ]
+  #v(1pt)
+]
 
 // Work Experience
 #v(10pt)

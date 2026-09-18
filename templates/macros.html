@@ -1,5 +1,7 @@
-{# Square 1-bit skill chip. Rendered as an <li> so it can live inside a <ul>. #}
-{% macro skill_chip(item) %}
+{# Square 1-bit skill chip. Rendered as an <li> so it can live inside a <ul>.
+   `uid` must be unique per rendered chip because the same skill can appear in
+   several places (skills panel, job tags, education tags). #}
+{% macro skill_chip(item, uid) %}
 <li class="im-chip">
   {% if item.url %}
   <a
@@ -13,9 +15,9 @@
   <span class="im-chip__label">{{ item.name }}</span>
   {% endif %}
   {% if item.description %}
-  <button type="button" data-target="popover-{{ item.id }}" class="im-chip__info" aria-label="More about {{ item.name }}" aria-describedby="popover-{{ item.id }}">?</button>
+  <button type="button" data-target="popover-{{ uid }}" class="im-chip__info" aria-label="More about {{ item.name }}" aria-describedby="popover-{{ uid }}">?</button>
   <div
-    id="popover-{{ item.id }}"
+    id="popover-{{ uid }}"
     data-popover
     role="tooltip"
     class="hidden fixed z-50 m-0 max-w-[min(32rem,calc(100vw-1rem))] border-2 border-black bg-white px-3 py-2 text-xs text-black shadow-none"

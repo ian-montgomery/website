@@ -12,16 +12,16 @@
     "location": "Wellington",
     "skills": ["go", "kotlin", "terraform", "typescript", "ruby", "react", "dotnet", "helm", "docker", "kubernetes", "github-actions", "teamcity", "octopus-deploy", "aws", "sql", "grafana", "new-relic", "sumologic"],
     "bullets": [
-      "Engineer CI/CD pipelines and reproducible testing environments using Docker, Helm, and Kubernetes on AWS.",
-      "Lead incident response rotations and post-incident reviews, maintaining observability across Grafana, New Relic, and Sumo Logic.",
-      "Implement synthetic monitoring across path-to-production pipelines to detect issues before reaching engineering teams."
+      "Build and maintain CI/CD pipelines using GitHub Actions, TeamCity, and Octopus Deploy supporting multi-language services in Go, Kotlin, TypeScript, Ruby, and .NET.",
+      "Engineer reproducible testing environments using Docker, Helm, and Kubernetes on AWS.",
+      "Lead incident response rotations and post-incident reviews, maintaining observability across Grafana, New Relic, and Sumo Logic."
     ],
     "bullets_pdf": [
-      "Stabilised automated test environments by diagnosing and addressing flakiness across containerised test suites on AWS and Kubernetes.",
+      "Engineer reproducible testing environments using Docker, Helm, and Kubernetes on AWS.",
       "Build and maintain CI/CD pipelines using GitHub Actions, TeamCity, and Octopus Deploy supporting multi-language services in Go, Kotlin, TypeScript, Ruby, and .NET.",
       "Design reproducible, isolated testing environments using Docker, Helm, and Kubernetes on AWS.",
-      "Implement synthetic monitoring across path-to-production environments to proactively intercept pipeline regressions before reaching development teams.",
-      "Lead incident response and blameless post-incident reviews; provide tier-1 on-call support using Grafana, New Relic, and Sumo Logic.",
+      "Implement synthetic monitoring across path-to-production pipelines to detect issues before reaching engineering teams.",
+      "Lead incident response rotations and post-incident reviews, maintaining observability across Grafana, New Relic, and Sumo Logic.",
       "Author operational runbooks and architectural documentation to standardise deployment practices and accelerate team onboarding."
     ]
   },
@@ -38,7 +38,7 @@
     "location": "Wellington",
     "skills": ["terraform", "azure", "aws", "gitlab", "octopus-deploy", "datadog", "dotnet", "sql"],
     "bullets": [
-      "Lifecycle Lead for multiple .NET SaaS products, owning operational reliability across development and production.",
+      "Served as Lifecycle Lead for multiple .NET SaaS products, owning operational reliability, deployments, and infrastructure from development to production.",
       "Provisioned and managed cloud infrastructure across Azure and AWS using Terraform.",
       "Authored security policies and access controls supporting successful ISO 27001 certification."
     ],
@@ -49,7 +49,7 @@
       "Established production observability and alert monitoring using Datadog and Azure Application Insights.",
       "Authored security policies and implemented access controls supporting successful ISO 27001 certification.",
       "Provided on-call production support for .NET applications and partnered directly with developers on complex troubleshooting.",
-      "Documented deployment procedures, infrastructure topology, and operational runbooks."
+      "Documented deployment procedures, infrastructure diagrams, and operational runbooks."
     ]
   },
   {
@@ -65,20 +65,20 @@
     "location": "Wellington",
     "skills": ["r-shiny", "leadership", "project-management", "data-visualization", "aws"],
     "bullets": [
-      "Managed sprint delivery and day-to-day operations for a team of 4 developers and 2 designers.",
-      "Delivered an interactive data visualisation platform for an international university research centre analysing global democracy datasets.",
-      "Managed technical hiring, performance reviews, and operational planning alongside company directors."
+      "Managed project delivery and day-to-day operations for a team of developers and designers.",
+      "Delivered an interactive data visualisation platform for a university research centre analysing global democracy datasets.",
+      "Managed hiring, performance reviews, and operational planning in support of company directors."
     ],
     "bullets_pdf": [
-      "Hired on a fixed-term contract to scale engineering operations, managing sprint delivery for a team of 4 developers and 2 designers.",
-      "Led delivery of an interactive data visualisation platform for a university research centre, enabling researchers to explore and analyse global governance data.",
-      "Managed technical hiring, onboarding, and structured performance reviews across the team.",
-      "Partnered with company directors on operational strategy and project scoping to expand client delivery capacity."
+      "Managed project delivery and day-to-day operations for a team of developers and designers.",
+      "Delivered an interactive data visualisation platform for a university research centre analysing global democracy datasets.",
+      "Managed hiring, performance reviews, and operational planning in support of company directors.",
+      "Advised company directors on operational strategy and project scoping to expand client delivery capacity."
     ]
   },
   {
     "id": "commonsense",
-    "title": "Manager / Assistant Manager",
+    "title": "Manager",
     "organization": "Commonsense",
     "org_url": "https://commonsenseorganics.co.nz/",
     "image": "/assets/commonsense.jpg",
@@ -89,16 +89,16 @@
     "location": "Wellington",
     "skills": ["leadership", "project-management", "sales"],
     "bullets": [
-      "Managed operations and logistics for a flagship supermarket and online delivery service, leading a team across 5 departments.",
+      "Managed daily operations and online delivery service for a high-volume flagship supermarket, leading a large team across 5 departments.",
       "Held full store P&L accountability, consistently meeting financial and operational targets.",
-      "Re-engineered fulfilment workflows during the COVID-19 pandemic to rapidly scale online delivery capacity tenfold."
+      "Scaled online grocery throughput tenfold during COVID-19 by re-engineering order processing, maintaining operational stability throughout the lockdowns."
     ],
     "bullets_pdf": [
-      "Managed daily operations and fulfilment logistics for a high-volume flagship supermarket, leading a large team across 5 departments.",
+      "Managed daily operations and online delivery service for a high-volume flagship supermarket, leading a large team across 5 departments.",
       "Promoted from Assistant Manager to Store Manager in 2018 based on sustained operational performance and leadership.",
       "Developed and mentored department managers to take ownership of rostering, inventory control, and customer service standards.",
-      "Managed monthly P&L reporting and cost control, using financial metrics to guide store strategy and consistently hit head-office targets.",
-      "Redesigned fulfilment workflows during COVID-19 lockdowns, successfully scaling online delivery capacity tenfold while maintaining service continuity."
+      "Held full store P&L accountability, consistently meeting financial and operational targets.",
+      "Scaled online grocery throughput tenfold during COVID-19 by re-engineering order processing, maintaining operational stability throughout the lockdowns."
     ]
   },
   {

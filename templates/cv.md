@@ -17,6 +17,14 @@
 
 ---
 
+## Skills
+
+{% for cat in skills.categories -%}
+**{{ cat.name }}:** {% for sk in cat.skills %}{% if sk in skills.skills %}{{ skills.skills[sk].name }}{% else %}{{ sk }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
+
+{% endfor %}
+---
+
 ## Work Experience
 
 {% for job in jobs -%}
@@ -28,7 +36,7 @@
 - {{ bullet }}
 {% endfor %}
 {% if job.skills -%}
-**Skills:** {% for sk in job.skills %}{% if skills.all[sk] %}{{ skills.all[sk].name }}{% else %}{{ sk }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
+**Skills:** {% for sk in job.skills %}{% if sk in skills.skills %}{{ skills.skills[sk].name }}{% else %}{{ sk }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
 {% endif %}
 {%- if not loop.last %}
 {% endif %}
@@ -45,7 +53,7 @@
 {{ edu.description }}
 
 {% if edu.skills -%}
-**Skills:** {% for sk in edu.skills %}{% if skills.all[sk] %}{{ skills.all[sk].name }}{% else %}{{ sk }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
+**Skills:** {% for sk in edu.skills %}{% if sk in skills.skills %}{{ skills.skills[sk].name }}{% else %}{{ sk }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
 {% endif %}
 {%- if not loop.last %}
 {% endif %}
