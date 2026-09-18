@@ -1,6 +1,11 @@
-# Ian Montgomery — Infrastructure Engineer Resume
+# Ian Montgomery — Infrastructure Engineer
 
-My personal resume site, hosted on Cloudflare Pages.
+My personal site at [ianmontgomery.net](https://ianmontgomery.net), hosted on
+Cloudflare Pages. It combines two routes in one Zola build:
+
+- `/` — a 1-bit digital business card.
+- `/resume` — the full resume.
+- `/generated/markdown/ian-montgomery-cv.md` — the Markdown CV.
 
 ## About Me
 
@@ -18,8 +23,20 @@ Infrastructure Engineer at Xero, working across CI/CD automation, AWS, Kubernete
 - **Deps**: Dependabot (`.github/dependabot.yml`) for GitHub Actions and Docker base image updates
 
 Resume data lives in `data/*.json` (single source of truth) and is consumed by the
-website (`templates/index.html`), the Markdown CV (`templates/cv.md`), and the PDF
-(`templates/pdf/resume.typ`) alike.
+website (`templates/resume.html` and `templates/card.html`), the Markdown CV
+(`templates/cv.md`), and the PDF (`templates/pdf/resume.typ`) alike.
+
+### Routes & structure
+
+- `content/_index.md` (`template = "card.html"`) → `/` — the digital business card.
+- `content/resume.md` (`template = "resume.html"`) → `/resume/` — the resume.
+- `content/cv.md` (`template = "cv.md"`) → `/generated/markdown/ian-montgomery-cv.md`.
+- The PDF is a local-only artifact and is never deployed.
+
+This repo is the source of truth for ianmontgomery.net; the standalone
+`ianmontgomery.net` repo is retired. `deploy.yaml` publishes `dist/` to the
+Cloudflare Pages project named by the `CLOUDFLARE_PROJECT_NAME` repository
+variable (set it to the existing ianmontgomery.net project).
 
 ## Development
 
@@ -54,10 +71,16 @@ The section order is unchanged: HEADER/BIO → SKILLS → WORK → EDUCATION.
 ### Files changed
 
 - `templates/base.html` — IBM Plex Mono via Google Fonts (Courier New fallback),
-  skip link, removed the theme toggle and the iconify runtime.
-- `templates/index.html` — header/bio with blinking terminal cursor, skills grid,
-  and Mac-window blocks for work and education (black title bar, dates right-aligned,
-  logo, duties, caps skills separated by `/`).
+  skip link, per-route `title`/`description`/OG blocks, light/dark `theme-color`,
+  removed the theme toggle and the iconify runtime.
+- `templates/card.html` — the `/` digital business card: centred 34rem column,
+  128px dithered portrait, uppercase name, blinking terminal cursor role line,
+  dither divider, and a bordered contact box (email, resume, GitHub, LinkedIn).
+  On viewports at least 700px wide and 640px tall it is locked to the viewport
+  height with no page scroll, matching the original standalone card.
+- `templates/resume.html` — the `/resume` page: header/bio with blinking terminal
+  cursor, skills grid, and Mac-window blocks for work and education (black title
+  bar, dates right-aligned, logo, duties, caps skills separated by `/`).
 - `templates/macros.html` — square bordered skill chips (info popover preserved).
 - `templates/og/card.svg` — 1-bit OpenGraph card.
 - `styles/input.css` — 1-bit component layer, `steps()` blink cursor, CSS-only
