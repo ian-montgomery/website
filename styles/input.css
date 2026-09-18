@@ -164,7 +164,7 @@ html {
     display: inline-block;
     width: 0.62em;
     height: 1.05em;
-    margin-left: 1ch;
+    margin-left: 0.6ch;
     vertical-align: -0.18em;
     background-color: var(--im-ink);
     animation: im-blink 1s steps(1, end) infinite;
