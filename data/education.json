@@ -1,19 +1,5 @@
 [
   {
-    "id": "umd",
-    "title": "Bachelor of Arts in English",
-    "institution": "University of Minnesota - Duluth",
-    "inst_url": "https://www.d.umn.edu/",
-    "image": "/assets/umd.jpeg",
-    "start": "2004-09-01",
-    "end": "2009-06-01",
-    "mode": "Full-time",
-    "minor": "Film Studies",
-    "description": "College Programming Director at the university radio station, KUMD, where I also worked as a Radio DJ. Treasurer of the Art Guild and member of the Literary Guild.",
-    "qualification": null,
-    "skills": null
-  },
-  {
     "id": "dev-academy",
     "title": "Full Stack Web Development",
     "institution": "Dev Academy Aotearoa",
@@ -30,7 +16,21 @@
       "redux",
       "express"
     ],
-    "description": "Intensive full-stack bootcamp covering JavaScript, Handlebars, React, Redux, and Node.js, with practical grounding in TDD and Agile. Marked my transition from operations management back into software development.",
+    "description": "Intensive software engineering curriculum covering JavaScript, Node.js, React, and relational databases, with practical grounding in test-driven development and agile team workflows.",
     "minor": null
+  },
+  {
+    "id": "umd",
+    "title": "Bachelor of Arts in English",
+    "institution": "University of Minnesota - Duluth",
+    "inst_url": "https://www.d.umn.edu/",
+    "image": "/assets/umd.jpeg",
+    "start": "2004-09-01",
+    "end": "2009-06-01",
+    "mode": "Full-time",
+    "minor": "Film Studies",
+    "description": "Student Programming Director and on-air host at university radio station KUMD. Active in campus student publications and arts organisations.",
+    "qualification": null,
+    "skills": null
   }
 ]

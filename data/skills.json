@@ -5,42 +5,42 @@
       "name": "Docker",
       "icon": "devicon:docker",
       "url": "https://www.docker.com/",
-      "description": "Containerization platform used for creating reproducible testing environments and deployment packaging across multiple projects."
+      "description": "Container platform used to build isolated, reproducible development and testing environments."
     },
     {
       "id": "dotnet",
       "name": ".NET",
       "icon": "devicon:dotnetcore",
       "url": "https://dotnet.microsoft.com/",
-      "description": "Provided specialized support for .NET applications, debugging and resolving issues across production environments."
+      "description": "Support and debugging for .NET backend services across staging and production environments."
     },
     {
       "id": "kotlin",
       "name": "Kotlin",
       "icon": "devicon:kotlin",
       "url": "https://kotlinlang.org/",
-      "description": "Modern programming language used for building CI/CD automation and tooling, particularly in JVM-based environments."
+      "description": "Automation tooling and pipeline utilities built within JVM environments."
     },
     {
       "id": "kubernetes",
       "name": "Kubernetes",
       "icon": "devicon:kubernetes",
       "url": "https://kubernetes.io/",
-      "description": "Container orchestration platform used for deploying and managing applications at scale in cloud environments."
+      "description": "Container orchestration platform used for deploying and managing services at scale."
     },
     {
       "id": "terraform",
       "name": "Terraform",
       "icon": "devicon:terraform",
       "url": "https://www.terraform.io/",
-      "description": "Infrastructure as Code tool that I use extensively for provisioning and managing cloud resources across AWS and Azure environments."
+      "description": "Infrastructure as Code (IaC) tool used to provision and manage cloud resources across AWS and Azure."
     },
     {
       "id": "typescript",
       "name": "TypeScript",
       "icon": "devicon:typescript",
       "url": "https://www.typescriptlang.org/",
-      "description": "Used for building automation tooling and CI/CD pipeline scripts, providing type safety for infrastructure automation projects."
+      "description": "Type-safe scripting and automation tooling for CI/CD pipelines and infrastructure tasks."
     }
   ],
   "devops": [
@@ -49,21 +49,21 @@
       "name": "AWS",
       "icon": "devicon:amazonwebservices-wordmark",
       "url": "https://aws.amazon.com/",
-      "description": "Amazon Web Services cloud platform used for hosting applications, managing infrastructure, and implementing CI/CD pipelines."
+      "description": "Cloud platform used for container workloads, networking, IAM, and automated build pipelines."
     },
     {
       "id": "azure",
       "name": "Azure",
       "icon": "devicon:azure",
       "url": "https://azure.microsoft.com/",
-      "description": "Microsoft Azure cloud platform used for infrastructure provisioning, application hosting, and DevOps pipeline implementation."
+      "description": "Cloud platform used for infrastructure provisioning, application hosting, and identity management."
     },
     {
       "id": "github-actions",
       "name": "GitHub Actions",
       "icon": "simple-icons:github",
       "url": "https://github.com/features/actions",
-      "description": "CI/CD platform used extensively for automating software testing, building, and deployment workflows."
+      "description": "CI/CD automation for build pipelines, testing suites, container packaging, and deployments."
     },
     {
       "id": "grafana",
@@ -84,7 +84,7 @@
       "name": "Octopus Deploy",
       "icon": "simple-icons:octopusdeploy",
       "url": "https://octopus.com/",
-      "description": "Deployment automation tool used for managing releases and deployments across multiple environments in SaaS products."
+      "description": "Release management platform used for automated multi-environment software deployments."
     },
     {
       "id": "sumologic",
@@ -107,49 +107,49 @@
       "name": "AWS",
       "icon": "devicon:amazonwebservices-wordmark",
       "url": "https://aws.amazon.com/",
-      "description": "Amazon Web Services cloud platform used for hosting applications, managing infrastructure, and implementing CI/CD pipelines."
+      "description": "Cloud platform used for container workloads, networking, IAM, and automated build pipelines."
     },
     "azure": {
       "id": "azure",
       "name": "Azure",
       "icon": "devicon:azure",
       "url": "https://azure.microsoft.com/",
-      "description": "Microsoft Azure cloud platform used for infrastructure provisioning, application hosting, and DevOps pipeline implementation."
+      "description": "Cloud platform used for infrastructure provisioning, application hosting, and identity management."
     },
     "css": {
       "id": "css",
       "name": "CSS",
       "icon": "devicon:css3",
       "url": "https://www.w3.org/Style/CSS/",
-      "description": "Used for styling web applications and websites, creating responsive and visually appealing user interfaces."
+      "description": "Styling and responsive layouts for web interfaces and component systems."
     },
     "data-visualization": {
       "id": "data-visualization",
-      "name": "Data Visualization",
+      "name": "Data Visualisation",
       "icon": "mdi:chart-line",
       "url": null,
-      "description": "Created interactive data visualization dashboards for complex datasets, delivering insights to stakeholders through clear and effective visual design."
+      "description": "Interactive visual analytics and dashboards designed to communicate complex research datasets."
     },
     "datadog": {
       "id": "datadog",
       "name": "Datadog",
       "icon": "devicon:datadog",
       "url": "https://www.datadoghq.com/",
-      "description": "Monitoring and observability platform used for identifying and diagnosing issues in production cloud environments."
+      "description": "Observability platform used for production metrics, APM tracing, and alert monitoring."
     },
     "docker": {
       "id": "docker",
       "name": "Docker",
       "icon": "devicon:docker",
       "url": "https://www.docker.com/",
-      "description": "Containerization platform used for creating reproducible testing environments and deployment packaging across multiple projects."
+      "description": "Container platform used to build isolated, reproducible development and testing environments."
     },
     "dotnet": {
       "id": "dotnet",
       "name": ".NET",
       "icon": "devicon:dotnetcore",
       "url": "https://dotnet.microsoft.com/",
-      "description": "Provided specialized support for .NET applications, debugging and resolving issues across production environments."
+      "description": "Support and debugging for .NET backend services across staging and production environments."
     },
     "express": {
       "id": "express",
@@ -163,21 +163,21 @@
       "name": "GitHub Actions",
       "icon": "simple-icons:github",
       "url": "https://github.com/features/actions",
-      "description": "CI/CD platform used extensively for automating software testing, building, and deployment workflows."
+      "description": "CI/CD automation for build pipelines, testing suites, container packaging, and deployments."
     },
     "gitlab": {
       "id": "gitlab",
       "name": "GitLab",
       "icon": "devicon:gitlab",
       "url": "https://about.gitlab.com/",
-      "description": "Used for implementing CI/CD pipelines and version control in cloud-based DevOps workflows."
+      "description": "Source control and CI/CD platform used for pipeline orchestration and build runners."
     },
     "go": {
       "id": "go",
       "name": "Go",
       "icon": "devicon:go",
       "url": "https://golang.org/",
-      "description": "Programming language used for building automation tooling and infrastructure applications with excellent performance and concurrency."
+      "description": "Compiled language used for writing performant platform tooling and infrastructure utilities."
     },
     "grafana": {
       "id": "grafana",
@@ -219,28 +219,28 @@
       "name": "Kotlin",
       "icon": "devicon:kotlin",
       "url": "https://kotlinlang.org/",
-      "description": "Modern programming language used for building CI/CD automation and tooling, particularly in JVM-based environments."
+      "description": "Automation tooling and pipeline utilities built within JVM environments."
     },
     "kubernetes": {
       "id": "kubernetes",
       "name": "Kubernetes",
       "icon": "devicon:kubernetes",
       "url": "https://kubernetes.io/",
-      "description": "Container orchestration platform used for deploying and managing applications at scale in cloud environments."
+      "description": "Container orchestration platform used for deploying and managing services at scale."
     },
     "leadership": {
       "id": "leadership",
       "name": "Leadership",
       "icon": "mdi:account-group",
       "url": null,
-      "description": "Led cross-functional teams across multiple roles, fostering collaborative environments and driving operational excellence through clear communication and shared responsibility."
+      "description": "Cross-functional team leadership, clear technical communication, and calm operational management during production incidents."
     },
     "mysql": {
       "id": "mysql",
       "name": "MySQL",
       "icon": "devicon:mysql",
       "url": "https://www.mysql.com/",
-      "description": "Database management and query optimization for corporate websites and web applications."
+      "description": "Relational database administration, schema design, and query optimisation."
     },
     "new-relic": {
       "id": "new-relic",
@@ -254,28 +254,28 @@
       "name": "Octopus Deploy",
       "icon": "simple-icons:octopusdeploy",
       "url": "https://octopus.com/",
-      "description": "Deployment automation tool used for managing releases and deployments across multiple environments in SaaS products."
+      "description": "Release management platform used for automated multi-environment software deployments."
     },
     "php": {
       "id": "php",
       "name": "PHP",
       "icon": "devicon:php",
       "url": "https://www.php.net/",
-      "description": "Used for building and customizing WordPress websites and developing web-based business solutions."
+      "description": "Server-side scripting language used for web application development and backend logic."
     },
     "project-management": {
       "id": "project-management",
       "name": "Project Management",
       "icon": "mdi:clipboard-check",
       "url": null,
-      "description": "Managed project timelines and coordinated between stakeholders to ensure successful delivery of complex technical projects."
+      "description": "Coordinating technical delivery, sprint workflows, and stakeholder communication across projects."
     },
     "r-shiny": {
       "id": "r-shiny",
       "name": "R Shiny",
       "icon": "devicon:rstudio",
       "url": "https://shiny.posit.co/",
-      "description": "Developed interactive data visualizations and dashboards for client projects, including major university dashboards."
+      "description": "Interactive web application framework in R used for building data dashboards and analytical tools."
     },
     "react": {
       "id": "react",
@@ -331,21 +331,21 @@
       "name": "Terraform",
       "icon": "devicon:terraform",
       "url": "https://www.terraform.io/",
-      "description": "Infrastructure as Code tool that I use extensively for provisioning and managing cloud resources across AWS and Azure environments."
+      "description": "Infrastructure as Code (IaC) tool used to provision and manage cloud resources across AWS and Azure."
     },
     "typescript": {
       "id": "typescript",
       "name": "TypeScript",
       "icon": "devicon:typescript",
       "url": "https://www.typescriptlang.org/",
-      "description": "Used for building automation tooling and CI/CD pipeline scripts, providing type safety for infrastructure automation projects."
+      "description": "Type-safe scripting and automation tooling for CI/CD pipelines and infrastructure tasks."
     },
     "wordpress": {
       "id": "wordpress",
       "name": "WordPress",
       "icon": "devicon:wordpress",
       "url": "https://wordpress.org/",
-      "description": "Designed and built corporate websites using WordPress, customizing themes and plugins for business requirements."
+      "description": "Content management system used for custom website design, theme development, and client administration."
     }
   }
 }
