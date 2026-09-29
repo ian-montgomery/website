@@ -3,21 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ block "title" . }}{{ site.Title }}{{ end }}</title>
-    <meta name="description" content="{{ block "description" . }}{{ site.Params.description }}{{ end }}" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <style>
-      html {
-        background: #fff;
-      }
-      @media (prefers-color-scheme: dark) {
-        html {
-          background: #000;
-        }
-      }
-    </style>
+    <title>{{ block "title" . }}{{ site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ block "description" . }}{{ site.Params.description }}{{ end }}" />
+    {{ partial "css.html" . }}
     <link rel="canonical" href="{{ .Permalink }}" />
     <meta property="og:title" content="{{ block "og_title" . }}{{ site.Title }}{{ end }}" />
     <meta property="og:description" content="{{ block "og_description" . }}{{ site.Params.og_description | default site.Params.description }}{{ end }}" />
@@ -27,15 +18,10 @@
     <link rel="icon" type="image/svg+xml" href="{{ relURL "favicon.svg" }}" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ relURL "fonts/IBMPlexMono-Regular.woff2" }}" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ relURL "fonts/IBMPlexMono-Bold.woff2" }}" />
-    {{ partial "css.html" . }}
-    <script src="{{ relURL "js/app.js" }}" defer></script>
+    {{ partial "js.html" . }}
   </head>
   <body class="bg-white font-mono text-black antialiased{{ block "body_class" . }}{{ end }}">
-    <a
-      href="#main"
-      class="im-screen-only sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:border-2 focus:border-black focus:bg-black focus:px-3 focus:py-2 focus:font-bold focus:text-white"
-      >Skip to content</a
-    >
+    <a href="#main" class="im-skip-link im-screen-only">Skip to content</a>
     {{ block "main" . }}{{ end }}
   </body>
 </html>

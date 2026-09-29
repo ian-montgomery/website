@@ -22,16 +22,8 @@
     </div>
 
     <dl class="mt-5 grid gap-1">
-      <div class="im-term">
-        <dt class="im-term__key">Location:</dt>
-        <dd>{{ $basics.city }}, {{ if eq $basics.country "New Zealand" }}NZ{{ else }}{{ $basics.country }}{{ end }}</dd>
-      </div>
-      {{ range $basics.details }}
-      <div class="im-term">
-        <dt class="im-term__key">{{ .label }}:</dt>
-        <dd>{{ .value }}</dd>
-      </div>
-      {{ end }}
+      {{ partial "term.html" (dict "key" "Location" "value" (printf "%s, %s" $basics.city (cond (eq $basics.country "New Zealand") "NZ" $basics.country))) }}
+      {{ range $basics.details }}{{ partial "term.html" (dict "key" .label "value" .value) }}{{ end }}
     </dl>
 
     <nav aria-label="Contact" class="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm sm:text-base">
@@ -46,7 +38,6 @@
 
   <div class="im-dither im-screen-only my-8" aria-hidden="true"></div>
 
-  <!-- ========================= SKILLS ========================= -->
   <section id="skills" aria-labelledby="skills-heading" class="im-block scroll-mt-8">
     <h2 id="skills-heading" class="im-heading">Skills</h2>
     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -63,7 +54,6 @@
 
   <div class="im-dither im-screen-only my-8" aria-hidden="true"></div>
 
-  <!-- ========================== WORK ========================== -->
   <section id="jobs" aria-labelledby="work-heading" class="scroll-mt-8">
     <h2 id="work-heading" class="im-heading">Work</h2>
     <div class="mt-6 grid gap-8">
@@ -87,9 +77,9 @@
             <div class="min-w-0">
               <p class="text-sm font-bold uppercase tracking-wide sm:text-base">{{ $job.title }}</p>
               <dl class="mt-2 grid gap-1">
-                <div class="im-term"><dt class="im-term__key">Employment type:</dt><dd>{{ $job.employment_type }}</dd></div>
-                <div class="im-term"><dt class="im-term__key">Work model:</dt><dd>{{ $job.work_model }}</dd></div>
-                <div class="im-term"><dt class="im-term__key">Location:</dt><dd>{{ $job.location }}</dd></div>
+                {{ partial "term.html" (dict "key" "Employment type" "value" $job.employment_type) }}
+                {{ partial "term.html" (dict "key" "Work model" "value" $job.work_model) }}
+                {{ partial "term.html" (dict "key" "Location" "value" $job.location) }}
               </dl>
             </div>
           </div>
@@ -114,7 +104,6 @@
 
   <div class="im-dither im-screen-only my-8" aria-hidden="true"></div>
 
-  <!-- ======================== EDUCATION ======================== -->
   <section id="education" aria-labelledby="education-heading" class="scroll-mt-8">
     <h2 id="education-heading" class="im-heading">Education</h2>
     <div class="mt-6 grid gap-8">
@@ -138,9 +127,9 @@
             <div class="min-w-0">
               <p class="text-sm font-bold uppercase tracking-wide sm:text-base">{{ $edu.title }}</p>
               <dl class="mt-2 grid gap-1">
-                {{ if $edu.mode }}<div class="im-term"><dt class="im-term__key">Mode:</dt><dd>{{ $edu.mode }}</dd></div>{{ end }}
-                {{ if $edu.qualification }}<div class="im-term"><dt class="im-term__key">Qualification:</dt><dd>{{ $edu.qualification }}</dd></div>{{ end }}
-                {{ if $edu.minor }}<div class="im-term"><dt class="im-term__key">Minor:</dt><dd>{{ $edu.minor }}</dd></div>{{ end }}
+                {{ with $edu.mode }}{{ partial "term.html" (dict "key" "Mode" "value" .) }}{{ end }}
+                {{ with $edu.qualification }}{{ partial "term.html" (dict "key" "Qualification" "value" .) }}{{ end }}
+                {{ with $edu.minor }}{{ partial "term.html" (dict "key" "Minor" "value" .) }}{{ end }}
               </dl>
             </div>
           </div>

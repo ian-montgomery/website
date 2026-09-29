@@ -10,14 +10,14 @@
 @source '../../layouts/**/*.html';
 @source '../../assets/**/*.svg';
 @source '../../content/**/*.md';
-@source '../../static/**/*.js';
+@source '../../assets/**/*.js';
 
 /* Self-hosted IBM Plex Mono (SIL OFL 1.1; see static/fonts/OFL.txt). */
 @font-face {
   font-family: 'IBM Plex Mono';
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: block;
   src: url('/fonts/IBMPlexMono-Regular.woff2') format('woff2');
 }
 
@@ -25,7 +25,7 @@
   font-family: 'IBM Plex Mono';
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
+  font-display: block;
   src: url('/fonts/IBMPlexMono-Bold.woff2') format('woff2');
 }
 
@@ -50,8 +50,9 @@
     --im-paper: #000;
   }
 
-  /* The portrait is ink-on-paper artwork and stays un-inverted; a white border
-     frames it on the black page. */
+  /* Unlayered on purpose: this must outrank the `border-black` utility on the
+     portrait. The portrait is ink-on-paper artwork and stays un-inverted; a
+     white border frames it on the black page. */
   .im-portrait {
     border-color: #fff;
   }
@@ -59,10 +60,6 @@
 
 @layer base {
   html {
-    @apply bg-white;
-  }
-
-  body {
     @apply bg-white font-mono text-black;
   }
 
@@ -94,6 +91,8 @@
 }
 
 @layer components {
+  /* --- shared resume components --- */
+
   .im-heading {
     @apply border-b-4 border-black pb-2 text-base font-bold uppercase tracking-[0.25em] sm:text-lg;
   }
@@ -150,8 +149,143 @@
     @apply border-l-2 border-black px-1.5 py-1 font-bold hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
   }
 
+  .im-chip__popover {
+    @apply fixed z-50 m-0 max-w-[min(32rem,calc(100vw-1rem))] border-2 border-black bg-white px-3 py-2 text-xs text-black;
+  }
+
   .im-list {
     @apply list-[square] pl-5 text-sm leading-relaxed;
+  }
+
+  .im-skip-link {
+    @apply sr-only;
+  }
+
+  .im-skip-link:focus {
+    @apply not-sr-only absolute left-2 top-2 z-50 border-2 border-black bg-black px-3 py-2 font-bold text-white;
+  }
+
+  /* --- digital business card (route "/") --- */
+
+  .im-card-stage {
+    @apply grid w-full place-items-center px-4 py-5;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .im-card {
+    @apply flex w-full max-w-[34rem] flex-col items-start gap-[18px];
+  }
+
+  .im-card__portrait {
+    display: block;
+    width: 128px;
+    height: 128px;
+    @apply border-[3px] border-black bg-white;
+  }
+
+  .im-card__name {
+    margin: 0;
+    @apply text-[clamp(2.75rem,13vw,5.5rem)] font-bold uppercase leading-[0.92] tracking-[-0.045em];
+  }
+
+  .im-card__role {
+    margin: 0;
+    @apply max-w-full text-[clamp(0.75rem,3.2vw,0.9rem)] font-bold uppercase tracking-[0.18em];
+  }
+
+  @media (min-width: 640px) {
+    .im-card__role {
+      letter-spacing: 0.22em;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .im-card__contact {
+    @apply w-full border-[3px] border-black bg-white;
+  }
+
+  .im-card__contact-head {
+    margin: 0;
+    @apply border-b-[3px] border-black bg-black px-3 py-[6px] text-[0.7rem] font-bold uppercase tracking-[0.24em] text-white;
+  }
+
+  .im-card__rows {
+    margin: 0;
+    @apply grid gap-2 p-3;
+  }
+
+  .im-card__row {
+    @apply grid grid-cols-[8ch_1fr] items-baseline gap-[1ch];
+  }
+
+  .im-card__row dt {
+    @apply text-xs font-bold uppercase tracking-[0.16em];
+  }
+
+  .im-card__row dd {
+    margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    @apply text-[0.9rem];
+  }
+
+  .im-card__contact a {
+    @apply decoration-2 underline-offset-4 hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
+  }
+
+  .im-card__foot {
+    margin: 0;
+    @apply text-[10px] uppercase leading-snug tracking-[0.14em];
+  }
+
+  .im-card__foot p {
+    margin: 0;
+  }
+
+  /* Lock the card to the viewport on larger screens; scroll below that. */
+  @media (min-width: 700px) and (min-height: 640px) {
+    body.im-card-page {
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+    }
+  }
+
+  /* Stack contact rows on phones. */
+  @media (max-width: 480px) {
+    .im-card__row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .im-card__row dt {
+      margin-top: 2px;
+    }
+
+    .im-card__row dd {
+      padding-bottom: 6px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .im-card-stage {
+      padding: 14px 12px;
+    }
+
+    .im-card {
+      gap: 14px;
+    }
+
+    .im-card__portrait {
+      width: 96px;
+      height: 96px;
+    }
+
+    .im-card__role {
+      letter-spacing: 0.12em;
+    }
   }
 }
 
@@ -201,129 +335,6 @@
   50%,
   100% {
     background-color: transparent;
-  }
-}
-
-/* --- Digital business card (route "/") --- */
-
-.im-card-stage {
-  @apply grid w-full place-items-center px-4 py-5;
-  min-height: 100vh;
-  min-height: 100svh;
-}
-
-.im-card {
-  @apply flex w-full max-w-[34rem] flex-col items-start gap-[18px];
-}
-
-.im-card__portrait {
-  display: block;
-  width: 128px;
-  height: 128px;
-  @apply border-[3px] border-black bg-white;
-}
-
-.im-card__name {
-  margin: 0;
-  @apply text-[clamp(2.75rem,13vw,5.5rem)] font-bold uppercase leading-[0.92] tracking-[-0.045em];
-}
-
-.im-card__role {
-  margin: 0;
-  @apply max-w-full text-[clamp(0.75rem,3.2vw,0.9rem)] font-bold uppercase tracking-[0.18em];
-}
-
-@media (min-width: 640px) {
-  .im-card__role {
-    letter-spacing: 0.22em;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-}
-
-.im-card__contact {
-  @apply w-full border-[3px] border-black bg-white;
-}
-
-.im-card__contact-head {
-  margin: 0;
-  @apply border-b-[3px] border-black bg-black px-3 py-[6px] text-[0.7rem] font-bold uppercase tracking-[0.24em] text-white;
-}
-
-.im-card__rows {
-  margin: 0;
-  @apply grid gap-2 p-3;
-}
-
-.im-card__row {
-  @apply grid grid-cols-[8ch_1fr] items-baseline gap-[1ch];
-}
-
-.im-card__row dt {
-  @apply text-xs font-bold uppercase tracking-[0.16em];
-}
-
-.im-card__row dd {
-  margin: 0;
-  min-width: 0;
-  overflow-wrap: anywhere;
-  @apply text-[0.9rem];
-}
-
-.im-card__contact a {
-  @apply decoration-2 underline-offset-4 hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
-}
-
-.im-card__foot {
-  margin: 0;
-  @apply text-[10px] uppercase leading-snug tracking-[0.14em];
-}
-
-.im-card__foot p {
-  margin: 0;
-}
-
-/* Lock the card to the viewport on larger screens; scroll below that. */
-@media (min-width: 700px) and (min-height: 640px) {
-  body.im-card-page {
-    height: 100vh;
-    height: 100svh;
-    overflow: hidden;
-  }
-}
-
-/* Stack contact rows on phones. */
-@media (max-width: 480px) {
-  .im-card__row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .im-card__row dt {
-    margin-top: 2px;
-  }
-
-  .im-card__row dd {
-    padding-bottom: 6px;
-  }
-}
-
-@media (max-width: 380px) {
-  .im-card-stage {
-    padding: 14px 12px;
-  }
-
-  .im-card {
-    gap: 14px;
-  }
-
-  .im-card__portrait {
-    width: 96px;
-    height: 96px;
-  }
-
-  .im-card__role {
-    letter-spacing: 0.12em;
   }
 }
 

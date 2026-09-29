@@ -1,0 +1,11 @@
+{{- /* Resolves a resource from assets/ and fingerprints it in production.
+   Returns the resource; .Data.Integrity is set only when fingerprinted. */ -}}
+{{- $resource := resources.Get . -}}
+{{- if not $resource -}}
+  {{- errorf "missing asset: %s" . -}}
+{{- end -}}
+{{- $result := $resource -}}
+{{- if not hugo.IsDevelopment -}}
+  {{- $result = $resource | fingerprint "sha256" -}}
+{{- end -}}
+{{- return $result -}}

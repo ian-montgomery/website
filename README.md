@@ -33,12 +33,14 @@ include a phone number in them, copy `.env.example` to `.env` and set
 - `data/*.yaml` — resume content (Hugo data files, shared with the PDF/Markdown CV)
 - `content/` — page routes (`/` card and `/resume/`)
 - `layouts/` — Hugo templates (base template, home/resume layouts, partials, output formats)
-- `assets/` — build inputs: `assets/css/main.css` (Tailwind v4 source), `assets/og/card.svg`, `assets/pdf/resume.typ`
+- `assets/` — build inputs: `assets/css/main.css` (Tailwind v4 source), `assets/js/app.js`, `assets/og/card.svg`, `assets/pdf/resume.typ`
 - `static/` — assets, headers, redirects
 - `Dockerfile` / `Makefile` — containerized build toolchain
 
 `make css` compiles `assets/css/main.css` to `assets/css/styles.css`, which Hugo
 fingerprints (cache-busted URL + Subresource Integrity) via
-`layouts/_partials/css.html`.
+`layouts/_partials/css.html`; `assets/js/app.js` is fingerprinted the same way.
+`static/_headers` sets the CSP and long-lived caching for the hashed CSS/JS and
+the fonts.
 
 Deploys run from `.github/workflows/deploy.yaml` on push to `main`.
