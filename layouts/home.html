@@ -1,0 +1,56 @@
+{{ define "title" }}{{ .Title }}{{ end }}
+{{ define "description" }}{{ .Description }}{{ end }}
+{{ define "og_title" }}{{ .Title }}{{ end }}
+{{ define "og_description" }}{{ .Description }}{{ end }}
+{{ define "body_class" }} im-card-page{{ end }}
+
+{{ define "main" }}
+{{ $basics := hugo.Data.basics }}
+
+<main id="main" class="im-card-stage im-crisp">
+  <div class="im-card">
+    <header>
+      <img
+        src="{{ relURL "assets/portrait.png" }}"
+        alt="Black-and-white dithered portrait of {{ $basics.name }}"
+        width="128"
+        height="128"
+        class="im-card__portrait im-pixelated im-portrait"
+      />
+
+      <h1 class="im-card__name">{{ $basics.name }}</h1>
+
+      <p class="im-card__role">&gt; {{ upper $basics.label }}<span class="im-cursor" aria-hidden="true"></span></p>
+    </header>
+
+    <div class="im-dither w-full" aria-hidden="true"></div>
+
+    <section class="im-card__contact" aria-labelledby="contact-heading">
+      <h2 class="im-card__contact-head" id="contact-heading">Contact</h2>
+
+      <dl class="im-card__rows">
+        <div class="im-card__row">
+          <dt>Email:</dt>
+          <dd><a href="mailto:{{ $basics.email }}">{{ $basics.email }}</a></dd>
+        </div>
+        {{ range $basics.socials }}
+        <div class="im-card__row">
+          <dt>{{ .label }}:</dt>
+          <dd>
+            <a href="{{ .url | safeURL }}" target="_blank" rel="me noopener noreferrer">{{ replace .url "https://" "" }}</a>
+          </dd>
+        </div>
+        {{ end }}
+        <div class="im-card__row">
+          <dt>Resume:</dt>
+          <dd><a href="{{ relref . "resume" }}">/resume</a></dd>
+        </div>
+      </dl>
+    </section>
+
+    <footer class="im-card__foot">
+      <p>&copy; IM {{ now.Format "2006" }} &middot; All rights reserved</p>
+    </footer>
+  </div>
+</main>
+{{ end }}

@@ -1,25 +1,29 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 /*
- * 1-bit / early-Macintosh layer.
+ * Tailwind CSS v4 entry point (CSS-first config).
  *
- * Strictly black (#000) and white (#fff). No grays, no color, no radius,
- * no shadows, no gradients — except the CSS-built dither dividers below.
- * "IBM Plex Mono" is loaded from Google Fonts in templates/base.html;
- * "Courier New" is the fallback.
+ * 1-bit / early-Macintosh design system: strictly black and white, no grays,
+ * colour, radius or shadows. Dark mode is the exact 1-bit inversion. Sources
+ * are declared explicitly so the scanned file set is deterministic.
  */
+@import 'tailwindcss' source(none);
 
-/*
- * Theme tokens. The palette is strictly two colours, so "dark mode" is the
- * exact 1-bit inversion: ink and paper trade places. Everything — Tailwind
- * utilities, dither art, cursor — resolves through these two variables.
- */
+@source '../../layouts/**/*.html';
+@source '../../assets/**/*.svg';
+@source '../../content/**/*.md';
+@source '../../static/**/*.js';
+
 :root {
   color-scheme: light;
   --im-ink: #000;
   --im-paper: #fff;
+}
+
+/* Map Tailwind's black/white onto the two theme variables so every utility
+   flips with the colour scheme. `font-mono` is IBM Plex Mono. */
+@theme {
+  --color-black: var(--im-ink);
+  --color-white: var(--im-paper);
+  --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,19 +33,11 @@
     --im-paper: #000;
   }
 
-  /* 1-bit artwork is ink-on-paper; invert it so it matches the flipped theme. */
-  .im-art-invert {
-    filter: invert(1);
-  }
-
-  /* The portrait stays un-inverted; a white border frames it on the black page. */
+  /* The portrait is ink-on-paper artwork and stays un-inverted; a white border
+     frames it on the black page. */
   .im-portrait {
     border-color: #fff;
   }
-}
-
-html {
-  scroll-behavior: auto;
 }
 
 @layer base {
@@ -53,7 +49,14 @@ html {
     @apply underline underline-offset-4;
   }
 
-  /* Selection and placeholders stay strictly ink-on-paper. */
+  /* v4 preflight uses currentColor for borders; keep bare `border` ink-coloured. */
+  *,
+  ::before,
+  ::after,
+  ::backdrop {
+    border-color: var(--im-ink);
+  }
+
   ::selection {
     background-color: var(--im-ink);
     color: var(--im-paper);
@@ -63,7 +66,6 @@ html {
     color: var(--im-ink);
   }
 
-  /* Visible, high-contrast keyboard focus in the same 1-bit language. */
   :focus-visible {
     outline: 3px solid var(--im-ink);
     outline-offset: 2px;
@@ -71,12 +73,10 @@ html {
 }
 
 @layer components {
-  /* Section heading: hard rule under uppercase tracked type. */
   .im-heading {
     @apply border-b-4 border-black pb-2 text-base font-bold uppercase tracking-[0.25em] sm:text-lg;
   }
 
-  /* Terminal-style "KEY: value" line. */
   .im-term {
     @apply flex flex-wrap gap-x-2 text-xs uppercase tracking-wide sm:text-sm;
   }
@@ -85,12 +85,10 @@ html {
     @apply font-bold;
   }
 
-  /* Bracketed contact label with instant inversion. */
   .im-link {
     @apply font-bold uppercase tracking-wide hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
   }
 
-  /* Early-Mac window block: 3px frame + black title bar. */
   .im-window {
     @apply border-[3px] border-black bg-white;
   }
@@ -115,12 +113,10 @@ html {
     @apply p-4 sm:p-5;
   }
 
-  /* Flat bordered box (skills columns, certifications). */
   .im-panel {
     @apply border-[3px] border-black bg-white p-4;
   }
 
-  /* Square skill chip. */
   .im-chip {
     @apply inline-flex items-stretch border-2 border-black bg-white text-xs sm:text-sm;
   }
@@ -133,32 +129,22 @@ html {
     @apply border-l-2 border-black px-1.5 py-1 font-bold hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white;
   }
 
-  /* Square bullet list for duties. */
   .im-list {
     @apply list-[square] pl-5 text-sm leading-relaxed;
   }
 }
 
 @layer utilities {
-  /* Dithered portrait/logo artwork. */
   .im-pixelated {
     image-rendering: pixelated;
   }
 
-  /*
-   * Crisp, un-antialiased text for the 1-bit card. Scoped to the card wrapper
-   * so the resume page keeps the body's normal antialiasing.
-   */
   .im-crisp {
     -webkit-font-smoothing: none;
     font-smooth: never;
   }
 
-  /*
-   * Checkerboard/dither divider strip, built entirely in CSS.
-   * Two opposing repeating-linear-gradients cross-hatch into an Atkinson-ish
-   * dither pattern; nothing here introduces a gray or a color.
-   */
+  /* CSS-built dither divider: two cross-hatched repeating gradients. */
   .im-dither {
     height: 0.5rem;
     background-color: var(--im-paper);
@@ -168,7 +154,6 @@ html {
     border-bottom: 2px solid var(--im-ink);
   }
 
-  /* Blinking terminal cursor (pure ink/paper toggle, no opacity). */
   .im-cursor {
     display: inline-block;
     width: 0.62em;
@@ -179,17 +164,6 @@ html {
     animation: im-blink 1s steps(1, end) infinite;
   }
 
-  @keyframes im-blink {
-    0%,
-    49.99% {
-      background-color: var(--im-ink);
-    }
-    50%,
-    100% {
-      background-color: transparent;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .im-cursor {
       animation: none;
@@ -198,13 +172,19 @@ html {
   }
 }
 
-/* --- Digital business card (route "/") ------------------------------------ */
+@keyframes im-blink {
+  0%,
+  49.99% {
+    background-color: var(--im-ink);
+  }
+  50%,
+  100% {
+    background-color: transparent;
+  }
+}
 
-/*
- * Reimplements the standalone ianmontgomery.net card in the same 1-bit
- * language as the resume: ink/paper only, 3px frames, no radius or shadow.
- * The card fills the viewport and is vertically centred.
- */
+/* --- Digital business card (route "/") --- */
+
 .im-card-stage {
   @apply grid w-full place-items-center px-4 py-5;
   min-height: 100vh;
@@ -232,7 +212,6 @@ html {
   @apply max-w-full text-[clamp(0.75rem,3.2vw,0.9rem)] font-bold uppercase tracking-[0.18em];
 }
 
-/* Wide enough for the role to sit on one line beside the cursor. */
 @media (min-width: 640px) {
   .im-card__role {
     letter-spacing: 0.22em;
@@ -283,11 +262,7 @@ html {
   margin: 0;
 }
 
-/*
- * Original card viewport behaviour: on viewports at least 700px wide and
- * 640px tall the card is locked to the viewport height with no page scroll;
- * below that the page scrolls normally. Scoped to the card route.
- */
+/* Lock the card to the viewport on larger screens; scroll below that. */
 @media (min-width: 700px) and (min-height: 640px) {
   body.im-card-page {
     height: 100vh;
@@ -296,7 +271,7 @@ html {
   }
 }
 
-/* Stack contact rows on phones so labels and values never fight for width. */
+/* Stack contact rows on phones. */
 @media (max-width: 480px) {
   .im-card__row {
     grid-template-columns: 1fr;
@@ -331,21 +306,16 @@ html {
   }
 }
 
-/* --- Print: clean one-page black-and-white resume ------------------------- */
+/* --- Print: compact one-page black-and-white resume --- */
 @media print {
   @page {
     margin: 12mm;
   }
 
-  /* Printing always uses the light theme, regardless of the device setting. */
   :root {
     color-scheme: light;
     --im-ink: #000;
     --im-paper: #fff;
-  }
-
-  .im-art-invert {
-    filter: none !important;
   }
 
   html,
@@ -356,7 +326,6 @@ html {
     line-height: 1.3;
   }
 
-  /* Decorative-only elements disappear. */
   .im-dither,
   .im-cursor,
   .im-screen-only {
@@ -368,7 +337,6 @@ html {
     text-decoration: underline;
   }
 
-  /* Drop the page shell frame and reclaim its padding for the page. */
   main {
     border-width: 0 !important;
     max-width: none !important;
@@ -376,7 +344,6 @@ html {
     padding: 0 !important;
   }
 
-  /* Compact every stacked gap so the resume fits on a single page. */
   .im-window__body,
   .im-panel {
     padding: 4pt 6pt !important;
@@ -419,7 +386,6 @@ html {
     gap: 4pt !important;
   }
 
-  /* Keep each role/degree intact on one page. */
   .im-window,
   .im-block {
     break-inside: avoid;
@@ -429,7 +395,6 @@ html {
 
   .im-window__bar {
     border-bottom-width: 2px !important;
-    /* Force the inverted title bar to actually print. */
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -438,7 +403,6 @@ html {
     border-bottom-width: 2px !important;
   }
 
-  /* The Nth column boxes sit side by side on screen; stack them for print. */
   .im-panel {
     border-width: 2px !important;
   }

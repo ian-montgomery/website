@@ -1,0 +1,12 @@
+{{- /* Compiled Tailwind (assets/css/styles.css). Fingered with SRI in production;
+   plain URL in dev so a Tailwind rewrite can't churn the hash. */ -}}
+{{- $css := resources.Get "css/styles.css" -}}
+{{- if not $css -}}
+  {{- errorf "assets/css/styles.css is missing; run `make css` before building" -}}
+{{- end -}}
+{{- if hugo.IsDevelopment -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
+{{- else -}}
+  {{- $css = $css | fingerprint "sha256" -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous" />
+{{- end -}}

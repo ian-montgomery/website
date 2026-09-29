@@ -4,8 +4,8 @@ Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net)
 
 ## Stack
 
-- **Framework**: [Zola](https://www.getzola.org/) (static site generator, Tera templates)
-- **Styling**: Tailwind CSS (standalone CLI — no Node.js)
+- **Framework**: [Hugo](https://gohugo.io/) (static site generator, Go templates)
+- **Styling**: Tailwind CSS v4, standalone CLI with CSS-first config — no Node.js
 - **PDF / OG card**: Typst / resvg
 - **Hosting**: Cloudflare Pages, deployed from GitHub Actions
 - **Toolchain**: a single container image (`resume-builder`) built from the `Dockerfile`; no Node.js or `node_modules`
@@ -19,7 +19,7 @@ Requires Docker or Podman and `make`:
 
 ```bash
 make site    # deployable site (CSS, HTML, OG card) into dist/
-make dev     # live-reloading dev server at http://localhost:4321
+make dev     # live-reloading dev server at http://localhost:1313 (Hugo + Tailwind watch)
 make build   # site + local-only PDF and Markdown CV
 make lint    # shell, YAML, and SAST checks
 ```
@@ -30,11 +30,15 @@ include a phone number in them, copy `.env.example` to `.env` and set
 
 ## Structure
 
-- `data/*.yaml` — resume content
-- `content/` — page routes
-- `templates/` — Tera templates
+- `data/*.yaml` — resume content (Hugo data files, shared with the PDF/Markdown CV)
+- `content/` — page routes (`/` card and `/resume/`)
+- `layouts/` — Hugo templates (base template, home/resume layouts, partials, output formats)
+- `assets/` — build inputs: `assets/css/main.css` (Tailwind v4 source), `assets/og/card.svg`, `assets/pdf/resume.typ`
 - `static/` — assets, headers, redirects
-- `styles/input.css` — Tailwind source
 - `Dockerfile` / `Makefile` — containerized build toolchain
+
+`make css` compiles `assets/css/main.css` to `assets/css/styles.css`, which Hugo
+fingerprints (cache-busted URL + Subresource Integrity) via
+`layouts/_partials/css.html`.
 
 Deploys run from `.github/workflows/deploy.yaml` on push to `main`.

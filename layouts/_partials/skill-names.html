@@ -1,0 +1,11 @@
+{{- /* Returns the display names for a list of skill slugs (raw slug fallback). */ -}}
+{{- $registry := hugo.Data.skills.skills -}}
+{{- $names := slice -}}
+{{- range $slug := . -}}
+  {{- with index $registry $slug -}}
+    {{- $names = $names | append .name -}}
+  {{- else -}}
+    {{- $names = $names | append $slug -}}
+  {{- end -}}
+{{- end -}}
+{{- return $names -}}

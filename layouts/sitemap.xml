@@ -1,0 +1,8 @@
+{{ `<?xml version="1.0" encoding="UTF-8"?>` | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{{- range .Pages }}
+    <url>
+        <loc>{{ .Permalink }}</loc>
+    </url>
+{{- end }}
+</urlset>
