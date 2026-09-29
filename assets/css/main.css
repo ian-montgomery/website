@@ -12,6 +12,23 @@
 @source '../../content/**/*.md';
 @source '../../static/**/*.js';
 
+/* Self-hosted IBM Plex Mono (SIL OFL 1.1; see static/fonts/OFL.txt). */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-Bold.woff2') format('woff2');
+}
+
 :root {
   color-scheme: light;
   --im-ink: #000;
@@ -41,6 +58,10 @@
 }
 
 @layer base {
+  html {
+    @apply bg-white;
+  }
+
   body {
     @apply bg-white font-mono text-black;
   }

@@ -34,7 +34,10 @@ RUN curl -fsSL -o /usr/local/bin/tailwindcss "https://github.com/tailwindlabs/ta
     && echo "${TAILWIND_SHA256}  /usr/local/bin/tailwindcss" | sha256sum -c - \
     && chmod +x /usr/local/bin/tailwindcss
 
-# Runtime: just the tools plus the fonts Typst/resvg need and the linters.
+# Runtime: just the tools plus the fonts the offline renderers need.
+# fonts-liberation -> Typst PDF ("Liberation Sans"); fonts-dejavu-core -> resvg
+# OG card ("DejaVu Sans Mono"). The website's IBM Plex Mono is self-hosted and
+# bundled with the site, so it is not installed here.
 FROM debian:trixie-slim@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \

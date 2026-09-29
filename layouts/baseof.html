@@ -8,6 +8,16 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <style>
+      html {
+        background: #fff;
+      }
+      @media (prefers-color-scheme: dark) {
+        html {
+          background: #000;
+        }
+      }
+    </style>
     <link rel="canonical" href="{{ .Permalink }}" />
     <meta property="og:title" content="{{ block "og_title" . }}{{ site.Title }}{{ end }}" />
     <meta property="og:description" content="{{ block "og_description" . }}{{ site.Params.og_description | default site.Params.description }}{{ end }}" />
@@ -15,12 +25,8 @@
     <meta property="og:url" content="{{ .Permalink }}" />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="{{ relURL "favicon.svg" }}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ relURL "fonts/IBMPlexMono-Regular.woff2" }}" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ relURL "fonts/IBMPlexMono-Bold.woff2" }}" />
     {{ partial "css.html" . }}
     <script src="{{ relURL "js/app.js" }}" defer></script>
   </head>
