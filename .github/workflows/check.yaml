@@ -1,7 +1,3 @@
-# GitHub Actions — PR check (replaces the Forgejo/Codeberg .forgejo/workflows/check.yaml).
-# Runs on a GitHub-hosted ubuntu runner with Docker (preinstalled, reliable).
-# It builds the cv-builder toolchain image once, then lints and builds the site
-# inside that same image — identical output to a local build.
 name: CI
 
 permissions:
