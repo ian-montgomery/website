@@ -31,233 +31,194 @@ skills:
     name: AWS
     icon: devicon:amazonwebservices-wordmark
     url: https://aws.amazon.com/
-    description: >-
-      Cloud platform used for container workloads, infrastructure provisioning, and build environments.
+    description: Cloud platform used for container workloads, infrastructure provisioning, and build environments.
   azure:
     name: Azure
     icon: devicon:azure
     url: https://azure.microsoft.com/
-    description: >-
-      Cloud platform used for SaaS application hosting, infrastructure provisioning, and access controls.
+    description: Cloud platform used for SaaS application hosting, infrastructure provisioning, and access controls.
   bash:
     name: Bash
     icon: simple-icons:gnubash
     url: https://www.gnu.org/software/bash/
-    description: >-
-      Shell used to script build, deployment, and operational automation in Linux and container environments.
+    description: Shell used to script build, deployment, and operational automation in Linux and container environments.
   csharp:
     name: "C#"
     icon: devicon:csharp
     url: https://learn.microsoft.com/dotnet/csharp/
-    description: >-
-      Language behind the .NET services supported through on-call troubleshooting and CI/CD pipeline automation.
+    description: Language behind the .NET services supported through on-call troubleshooting and CI/CD pipeline automation.
   css:
     name: CSS
     icon: devicon:css3
     url: https://www.w3.org/Style/CSS/
-    description: >-
-      Style sheet language used to build responsive layouts and customise web interfaces.
+    description: Style sheet language used to build responsive layouts and customise web interfaces.
   data-visualization:
     name: Data Visualisation
     icon: mdi:chart-line
     url: null
-    description: >-
-      Visual analytics and interactive dashboards built to communicate complex datasets.
+    description: Visual analytics and interactive dashboards built to communicate complex datasets.
   datadog:
     name: Datadog
     icon: devicon:datadog
     url: https://www.datadoghq.com/
-    description: >-
-      Observability platform used for production metrics, APM tracing, and alert monitoring.
+    description: Observability platform used for production metrics, APM tracing, and alert monitoring.
   docker:
     name: Docker
     icon: devicon:docker
     url: https://www.docker.com/
-    description: >-
-      Containerisation platform used to package microservices and build isolated, reproducible test environments.
+    description: Containerisation platform used to package microservices and build isolated, reproducible test environments.
   dotnet:
     name: .NET
     icon: devicon:dotnetcore
     url: https://dotnet.microsoft.com/
-    description: >-
-      Backend framework supported through on-call production troubleshooting and CI/CD pipeline automation.
+    description: Backend framework supported through on-call production troubleshooting and CI/CD pipeline automation.
   express:
     name: Express
     icon: devicon:express
     url: https://expressjs.com/
-    description: >-
-      Node.js web framework used to build RESTful APIs and middleware services.
+    description: Node.js web framework used to build RESTful APIs and middleware services.
   github-actions:
     name: GitHub Actions
     icon: simple-icons:github
     url: https://github.com/features/actions
-    description: >-
-      CI/CD automation platform used to build, test, package, and deploy multi-language services.
+    description: CI/CD automation platform used to build, test, package, and deploy multi-language services.
   gitlab:
     name: GitLab
     icon: devicon:gitlab
     url: https://about.gitlab.com/
-    description: >-
-      Source control and CI/CD platform used to manage pipelines and trigger deployments.
+    description: Source control and CI/CD platform used to manage pipelines and trigger deployments.
   go:
     name: Go
     icon: devicon:go
     url: https://golang.org/
-    description: >-
-      Compiled systems language used to build infrastructure utilities and platform tooling.
+    description: Compiled systems language used to build infrastructure utilities and platform tooling.
   grafana:
     name: Grafana
     icon: simple-icons:grafana
     url: https://grafana.com/
-    description: >-
-      Observability platform used to build dashboards and monitor Kubernetes cluster health and metrics.
+    description: Observability platform used to build dashboards and monitor Kubernetes cluster health and metrics.
   handlebars:
     name: Handlebars
     icon: devicon:handlebars
     url: https://handlebarsjs.com
-    description: >-
-      Templating engine used to render server-side views and modular HTML templates.
+    description: Templating engine used to render server-side views and modular HTML templates.
   helm:
     name: Helm
     icon: simple-icons:helm
     url: https://helm.sh/
-    description: >-
-      Kubernetes package manager used to configure and deploy multi-service test environments.
+    description: Kubernetes package manager used to configure and deploy multi-service test environments.
   html:
     name: HTML
     icon: simple-icons:html5
     url: null
-    description: >-
-      Standard markup language used to structure semantic, accessible web pages.
+    description: Standard markup language used to structure semantic, accessible web pages.
   javascript:
     name: JavaScript
     icon: simple-icons:javascript
     url: null
-    description: >-
-      Scripting language used to build full-stack web applications and automation tools.
+    description: Scripting language used to build full-stack web applications and automation tools.
   kotlin:
     name: Kotlin
     icon: devicon:kotlin
     url: https://kotlinlang.org/
-    description: >-
-      JVM language used to build pipeline automation utilities and support build environments.
+    description: JVM language used to build pipeline automation utilities and support build environments.
   kubernetes:
     name: Kubernetes
     icon: devicon:kubernetes
     url: https://kubernetes.io/
-    description: >-
-      Container orchestration platform used to architect and deploy isolated testing environments.
+    description: Container orchestration platform used to architect and deploy isolated testing environments.
   leadership:
     name: Leadership
     icon: mdi:account-group
     url: null
-    description: >-
-      Operational leadership applied across incident response, team management, and critical operations.
+    description: Operational leadership applied across incident response, team management, and critical operations.
   mysql:
     name: MySQL
     icon: devicon:mysql
     url: https://www.mysql.com/
-    description: >-
-      Relational database used for schema design, SQL query optimisation, and data management.
+    description: Relational database used for schema design, SQL query optimisation, and data management.
   new-relic:
     name: New Relic
     icon: simple-icons:newrelic
     url: https://newrelic.com/
-    description: >-
-      APM and monitoring tool used for distributed tracing, alerting, and incident investigations.
+    description: APM and monitoring tool used for distributed tracing, alerting, and incident investigations.
   octopus-deploy:
     name: Octopus Deploy
     icon: simple-icons:octopusdeploy
     url: https://octopus.com/
-    description: >-
-      Release management platform used for automated multi-environment software deployments.
+    description: Release management platform used for automated multi-environment software deployments.
   php:
     name: PHP
     icon: devicon:php
     url: https://www.php.net/
-    description: >-
-      Server-side language used for web application development and custom WordPress themes.
+    description: Server-side language used for web application development and custom WordPress themes.
   powershell:
     name: PowerShell
     icon: simple-icons:powershell
     url: https://learn.microsoft.com/powershell/
-    description: >-
-      Windows shell used for scripting and automating operational and deployment tasks.
+    description: Windows shell used for scripting and automating operational and deployment tasks.
   project-management:
     name: Project Management
     icon: mdi:clipboard-check
     url: null
-    description: >-
-      Coordinating sprint delivery, scoping client requirements, and managing operational workflows.
+    description: Coordinating sprint delivery, scoping client requirements, and managing operational workflows.
   python:
     name: Python
     icon: devicon:python
     url: https://www.python.org/
-    description: >-
-      Scripting language used for automation, data handling, and tooling tasks.
+    description: Scripting language used for automation, data handling, and tooling tasks.
   r-shiny:
     name: R Shiny
     icon: devicon:rstudio
     url: https://shiny.posit.co/
-    description: >-
-      R framework used to build interactive analytical web dashboards for research data.
+    description: R framework used to build interactive analytical web dashboards for research data.
   react:
     name: React
     icon: devicon:react
     url: https://react.dev
-    description: >-
-      Frontend UI library used to build single-page web applications and interactive components.
+    description: Frontend UI library used to build single-page web applications and interactive components.
   redux:
     name: Redux
     icon: simple-icons:redux
     url: https://redux.js.org
-    description: >-
-      State management library used for predictable state containers in React applications.
+    description: State management library used for predictable state containers in React applications.
   ruby:
     name: Ruby
     icon: devicon:ruby
     url: https://www.ruby-lang.org/
-    description: >-
-      Dynamic language supported across CI/CD build and deployment pipelines.
+    description: Dynamic language supported across CI/CD build and deployment pipelines.
   sales:
     name: Sales
     icon: fa6-solid:handshake
     url: null
-    description: >-
-      Commercial store management, holding P&L accountability and driving online order growth.
+    description: Commercial store management, holding P&L accountability and driving online order growth.
   sql:
     name: SQL
     icon: fa6-solid:database
     url: null
-    description: >-
-      Query language used for database migrations, data analysis, and production troubleshooting.
+    description: Query language used for database migrations, data analysis, and production troubleshooting.
   sumologic:
     name: Sumo Logic
     icon: simple-icons:sumologic
     url: https://sumologic.com/
-    description: >-
-      Log analytics platform used for centralised log querying and incident investigations.
+    description: Log analytics platform used for centralised log querying and incident investigations.
   teamcity:
     name: TeamCity
     icon: simple-icons:teamcity
     url: https://www.jetbrains.com/teamcity/
-    description: >-
-      CI server used to configure multi-stage build chains and automated test pipelines.
+    description: CI server used to configure multi-stage build chains and automated test pipelines.
   terraform:
     name: Terraform
     icon: devicon:terraform
     url: https://www.terraform.io/
-    description: >-
-      Infrastructure as Code tool used to provision and manage cloud resources across AWS and Azure.
+    description: Infrastructure as Code tool used to provision and manage cloud resources across AWS and Azure.
   typescript:
     name: TypeScript
     icon: devicon:typescript
     url: https://www.typescriptlang.org/
-    description: >-
-      Type-safe language used to write pipeline automation scripts and infrastructure tooling.
+    description: Type-safe language used to write pipeline automation scripts and infrastructure tooling.
   wordpress:
     name: WordPress
     icon: devicon:wordpress
     url: https://wordpress.org/
-    description: >-
-      Content management system used for custom theme development, site design, and content management.
+    description: Content management system used for custom theme development, site design, and content management.

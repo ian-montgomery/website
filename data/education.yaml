@@ -13,8 +13,7 @@
     - react
     - redux
     - express
-  description: >-
-    Intensive software engineering curriculum covering JavaScript, Node.js, React, and relational databases, with practical grounding in test-driven development and agile team workflows.
+  description: Intensive software engineering curriculum covering JavaScript, Node.js, React, and relational databases, with practical grounding in test-driven development and agile team workflows.
   minor: null
 - id: umd
   title: Bachelor of Arts in English
@@ -25,7 +24,6 @@
   end: "2009-06-01"
   mode: Full-time
   minor: Film Studies
-  description: >-
-    Student Programming Director and on-air host at university radio station KUMD. Active in campus student publications and arts organisations.
+  description: Student Programming Director and on-air host at university radio station KUMD. Active in campus student publications and arts organisations.
   qualification: null
   skills: null
