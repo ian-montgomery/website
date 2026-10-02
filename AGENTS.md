@@ -60,24 +60,26 @@ runs these on `pre-commit` and `make lint` + `make build` on `pre-push`.
 strings (e.g. `"2023-12-01"`) so Hugo and Typst parse them identically.
 
 - `basics.yaml`, `jobs.yaml`, `education.yaml` — shared by
-  `layouts/_default/cv.html` (web, uses `bullets`), `layouts/home.html`
-  (card, uses `basics`), `layouts/_default/cv.md` (uses `bullets_pdf`), and
-  `assets/pdf/cv.typ` (uses `bullets_pdf`).
+  `layouts/cv.html` (web, uses `bullets`), `layouts/home.html`
+  (card, uses `basics`), `layouts/cv.md` (uses `bullets_pdf`), and
+  `build/pdf/cv.typ` (uses `bullets_pdf`).
 - `skills.yaml` — skill registry keyed by slug (names/urls/descriptions)
   plus ordered `categories` grouping slugs. Jobs/education reference skills by
   slug. The slug is the id; there is no separate `id` field.
 - `achievements.yaml` — certifications (web + Markdown CV; not the PDF).
 
 The phone number is **not** in `basics.yaml`: `make private-data` writes it to
-gitignored `local/private.json`, read by `layouts/_default/cv.md` and
-`assets/pdf/cv.typ` (guarded — omitted when unset). Never commit it.
+gitignored `local/private.json`, read by `layouts/cv.md` and
+`build/pdf/cv.typ` (guarded — omitted when unset). Never commit it.
 
 `content/` holds `_index.md` (`/` card) and `cv.md` (`/cv/`). Templates
 are Go templates in `layouts/` — `baseof.html`, `home.html`,
-`_default/cv.html`, `_default/cv.md`, and partials (`skill-chip`,
-`skill-names`, `term`, `fingerprinted`, `css`, `js`). Internal page links
-use Hugo's `relref` and static assets use `relURL`, so an unresolved ref fails
-the build. After editing `data/*.yaml`, run `make lint-yaml` and `make build`.
+`cv.html`, `cv.md`, and partials (`skill-chip`,
+`skill-names`, `term`, `fingerprinted`, `css`, `js`). Named layouts live at the
+`layouts/` root (Hugo's post-v0.146 template system; no `_default/`). Internal
+page links use Hugo's `relref` and static assets use `relURL`, so an unresolved
+ref fails the build. After editing `data/*.yaml`, run `make lint-yaml` and
+`make build`.
 
 ## Environment & containers
 

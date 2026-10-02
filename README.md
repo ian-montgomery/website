@@ -33,7 +33,8 @@ include a phone number in them, copy `.env.example` to `.env` and set
 - `data/*.yaml` — CV content (Hugo data files, shared with the PDF/Markdown CV)
 - `content/` — page routes (`/` card and `/cv/`)
 - `layouts/` — Hugo templates (base template, home/CV layouts, partials, output formats)
-- `assets/` — build inputs: `assets/css/main.css` (Tailwind v4 source), `assets/js/app.js`, `assets/og/card.svg`, `assets/pdf/cv.typ`
+- `assets/` — Hugo Pipes resources: `assets/css/main.css` (Tailwind v4 source) and `assets/js/app.js`
+- `build/` — inputs for the external renderers: `build/og/card.svg` (resvg) and `build/pdf/cv.typ` (Typst)
 - `static/` — assets, headers, redirects
 - `Dockerfile` / `Makefile` — containerized build toolchain
 

@@ -66,11 +66,11 @@ hugo: private-data
 
 pdf: private-data
 	mkdir -p generated/pdf
-	$(CONTAINER_CMD) typst compile --root . assets/pdf/cv.typ generated/pdf/ian-montgomery-cv.pdf
+	$(CONTAINER_CMD) typst compile --root . build/pdf/cv.typ generated/pdf/ian-montgomery-cv.pdf
 
 og:
 	mkdir -p dist/generated/og
-	$(CONTAINER_CMD) resvg assets/og/card.svg dist/generated/og/index.png -w 1200 -h 630
+	$(CONTAINER_CMD) resvg build/og/card.svg dist/generated/og/index.png -w 1200 -h 630
 
 # The Markdown CV source (local/cv.md) is staged into content/ only for this
 # build, so `make site` can never include it. It is staged as cv-markdown.md
