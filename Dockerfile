@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 #
-# resume-builder: Hugo + Typst + resvg + standalone Tailwind CLI (no Node.js).
+# cv-builder: Hugo + Typst + resvg + standalone Tailwind CLI (no Node.js).
 # Versions are pinned by ARG; every download is verified against a hardcoded
 # SHA-256. Bump a *_VERSION and its *_SHA256 together.
 

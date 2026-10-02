@@ -1,14 +1,14 @@
 # AGENTS.md
 
 Operational notes for agent sessions working in this repo. Read alongside
-`README.md` (overview). This is a personal resume site (static HTML, plus a
+`README.md` (overview). This is a personal CV site (static HTML, plus a
 local-only Markdown CV and PDF) with a fully containerized, Node-free toolchain
 deployed to Cloudflare Pages.
 
 ## Verification
 
 Run `make build` before considering any change done — it builds the
-`resume-builder` image, then the full local build (site + PDF + Markdown CV) in
+`cv-builder` image, then the full local build (site + PDF + Markdown CV) in
 containers. For a site-only change, `make lint` + `make site` is enough until the
 final `make build`.
 
@@ -16,7 +16,7 @@ final `make build`.
 
 The toolchain is **100% containerized and Node-free**: Hugo (site), Typst (PDF),
 resvg (OG card), and the standalone Tailwind CSS CLI, all in the
-`resume-builder` image from the root `Dockerfile` (digest-pinned base, every tool
+`cv-builder` image from the root `Dockerfile` (digest-pinned base, every tool
 download SHA-256 verified, built for `linux/amd64`).
 
 Tailwind is v4 with CSS-first config in `assets/css/main.css` (no
@@ -29,7 +29,7 @@ URLs in dev.
 - `make site` — `css` → `hugo` (into `dist/`) → `og`.
 - `make build` — `image` + `site` + `pdf` + `markdown`.
 - `make pdf` / `make markdown` — local-only artifacts under `generated/`.
-- `make private-data` — writes `RESUME_PHONE` from gitignored `.env` to
+- `make private-data` — writes `CV_PHONE` from gitignored `.env` to
   `local/private.json` (empty in CI).
 - `make dev` — Hugo live-reload server at `http://localhost:1313`, with the
   Tailwind CLI in watch mode.
@@ -37,9 +37,10 @@ URLs in dev.
 
 **The PDF and Markdown CV are workstation-local only.** CI runs `make site`
 (never `make build`). The Markdown CV source is `local/cv.md`, staged into
-`content/cv.md` only during `make markdown`; `content/cv.md` is gitignored and
-the `hugo` target refuses to build while it exists, so the deployed site never
-includes it. Never wire `pdf`/`markdown` into CI.
+`content/cv-markdown.md` only during `make markdown`; `content/cv-markdown.md` is
+gitignored and the `hugo` target refuses to build while it exists, so the
+deployed site never includes it. (It is staged as `cv-markdown.md` because
+`content/cv.md` is the web `/cv/` page.) Never wire `pdf`/`markdown` into CI.
 
 ### Lint & hooks
 
@@ -50,7 +51,7 @@ runs these on `pre-commit` and `make lint` + `make build` on `pre-push`.
 
 ### Ignored artifacts
 
-`dist/`, `generated/`, `assets/css/styles.css`, `content/cv.md`,
+`dist/`, `generated/`, `assets/css/styles.css`, `content/cv-markdown.md`,
 `local/private.json`, `.env*`, and the legacy `public/`. `AGENTS.md` is tracked.
 
 ## Content model
@@ -59,9 +60,9 @@ runs these on `pre-commit` and `make lint` + `make build` on `pre-push`.
 strings (e.g. `"2023-12-01"`) so Hugo and Typst parse them identically.
 
 - `basics.yaml`, `jobs.yaml`, `education.yaml` — shared by
-  `layouts/_default/resume.html` (web, uses `bullets`), `layouts/home.html`
+  `layouts/_default/cv.html` (web, uses `bullets`), `layouts/home.html`
   (card, uses `basics`), `layouts/_default/cv.md` (uses `bullets_pdf`), and
-  `assets/pdf/resume.typ` (uses `bullets_pdf`).
+  `assets/pdf/cv.typ` (uses `bullets_pdf`).
 - `skills.yaml` — skill registry keyed by slug (names/urls/descriptions)
   plus ordered `categories` grouping slugs. Jobs/education reference skills by
   slug. The slug is the id; there is no separate `id` field.
@@ -69,11 +70,11 @@ strings (e.g. `"2023-12-01"`) so Hugo and Typst parse them identically.
 
 The phone number is **not** in `basics.yaml`: `make private-data` writes it to
 gitignored `local/private.json`, read by `layouts/_default/cv.md` and
-`assets/pdf/resume.typ` (guarded — omitted when unset). Never commit it.
+`assets/pdf/cv.typ` (guarded — omitted when unset). Never commit it.
 
-`content/` holds `_index.md` (`/` card) and `resume.md` (`/resume/`). Templates
+`content/` holds `_index.md` (`/` card) and `cv.md` (`/cv/`). Templates
 are Go templates in `layouts/` — `baseof.html`, `home.html`,
-`_default/resume.html`, `_default/cv.md`, and partials (`skill-chip`,
+`_default/cv.html`, `_default/cv.md`, and partials (`skill-chip`,
 `skill-names`, `term`, `fingerprinted`, `css`, `js`). Internal page links
 use Hugo's `relref` and static assets use `relURL`, so an unresolved ref fails
 the build. After editing `data/*.yaml`, run `make lint-yaml` and `make build`.
@@ -101,9 +102,10 @@ the build. After editing `data/*.yaml`, run `make lint-yaml` and `make build`.
 ## Deploy & Cloudflare Pages
 
 Hosted at `https://ianmontgomery.net` (`hugo.toml` `baseURL`): `/` is the card,
-`/resume/` the resume. Pages serves `dist/`. `static/_headers` (CSP + immutable
+`/cv/` the CV. Pages serves `dist/`. `static/_headers` (CSP + immutable
 caching for hashed CSS/JS) and `static/_redirects` are copied in;
-`layouts/404.html` is served on 404.
+`layouts/404.html` is served on 404. `static/_redirects` 301s the old
+`/resume/` paths to `/cv/`.
 
 ## Common workflows
 

@@ -2,3 +2,7 @@
 # for these to take effect.
 https://ianmontgomery.dev/* https://ianmontgomery.net/:splat 301
 https://www.ianmontgomery.dev/* https://ianmontgomery.net/:splat 301
+
+# /resume/ was renamed to /cv/.
+/resume/ /cv/ 301
+/resume/* /cv/:splat 301

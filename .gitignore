@@ -14,7 +14,7 @@ generated
 !.env.example
 /local/*
 !/local/cv.md
-/content/cv.md
+/content/cv-markdown.md
 
 # OS / editor / AI noise
 .DS_Store

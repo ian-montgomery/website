@@ -1,6 +1,6 @@
-IMAGE_NAME ?= resume-builder
+IMAGE_NAME ?= cv-builder
 
-# Local-only secrets (gitignored). Provides RESUME_PHONE for the PDF and
+# Local-only secrets (gitignored). Provides CV_PHONE for the PDF and
 # Markdown CV; empty in CI.
 -include .env
 
@@ -34,7 +34,7 @@ help:
 	@echo "make dev        Hugo + Tailwind dev server at http://localhost:1313"
 	@echo "make build      site + local-only PDF and Markdown CV"
 	@echo "make site       deployable site (CSS, HTML, OG card); what CI builds"
-	@echo "make pdf        compile the PDF resume (local only)"
+	@echo "make pdf        compile the PDF CV (local only)"
 	@echo "make markdown   generate the Markdown CV (local only)"
 	@echo "make lint       shell + YAML + SAST checks (CI-safe)"
 	@echo "make clean      remove build artifacts"
@@ -54,36 +54,37 @@ site: css hugo og
 
 # Writes the gitignored local data file the CV templates read.
 private-data:
-	@printf '{"phone":"%s"}\n' '$(RESUME_PHONE)' > local/private.json
+	@printf '{"phone":"%s"}\n' '$(CV_PHONE)' > local/private.json
 
 # Tailwind CSS v4 (standalone CLI); Hugo fingerprints the output.
 css:
 	$(CONTAINER_CMD) tailwindcss -i assets/css/main.css -o assets/css/styles.css --minify
 
 hugo: private-data
-	@test ! -e content/cv.md || { echo "error: remove staged content/cv.md first" >&2; exit 1; }
+	@test ! -e content/cv-markdown.md || { echo "error: remove staged content/cv-markdown.md first" >&2; exit 1; }
 	$(CONTAINER_CMD) hugo --destination dist --cleanDestinationDir
 
 pdf: private-data
 	mkdir -p generated/pdf
-	$(CONTAINER_CMD) typst compile --root . assets/pdf/resume.typ generated/pdf/ian-montgomery-cv.pdf
+	$(CONTAINER_CMD) typst compile --root . assets/pdf/cv.typ generated/pdf/ian-montgomery-cv.pdf
 
 og:
 	mkdir -p dist/generated/og
 	$(CONTAINER_CMD) resvg assets/og/card.svg dist/generated/og/index.png -w 1200 -h 630
 
 # The Markdown CV source (local/cv.md) is staged into content/ only for this
-# build, so `make site` can never include it.
+# build, so `make site` can never include it. It is staged as cv-markdown.md
+# because content/cv.md is the web /cv/ page.
 markdown: private-data
 	@mkdir -p generated/markdown
-	@cp local/cv.md content/cv.md; \
-	trap 'rm -f content/cv.md' EXIT INT TERM; \
+	@cp local/cv.md content/cv-markdown.md; \
+	trap 'rm -f content/cv-markdown.md' EXIT INT TERM; \
 	$(CONTAINER_CMD) hugo --destination generated/markdown-src --cleanDestinationDir --quiet; \
-	mv generated/markdown-src/cv/ian-montgomery-cv.md generated/markdown/ian-montgomery-cv.md; \
+	mv generated/markdown-src/cv-markdown/ian-montgomery-cv.md generated/markdown/ian-montgomery-cv.md; \
 	rm -rf generated/markdown-src
 
 clean:
-	rm -rf dist generated public assets/css/styles.css content/cv.md resources .hugo_build.lock
+	rm -rf dist generated public assets/css/styles.css content/cv-markdown.md resources .hugo_build.lock
 
 lint: lint-shell lint-yaml lint-semgrep
 
