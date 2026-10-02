@@ -1,7 +1,3 @@
-# lefthook.yml
-# All checks delegate to `make` targets — see the Makefile for definitions.
-# Tools run inside the resume-builder Podman container (or semgrep/betterleaks images).
-
 pre-commit:
   commands:
     lint-shell:

@@ -1,172 +1,117 @@
 # AGENTS.md
 
 Operational notes for agent sessions working in this repo. Read alongside
-`README.md` (overview). This is a personal resume site (static HTML site, plus
-local-only Markdown CV and PDF) with a fully containerized, Node-free build
-toolchain deployed to Cloudflare Pages.
+`README.md` (overview). This is a personal CV site (static HTML, plus a
+local-only Markdown CV and PDF) with a fully containerized, Node-free toolchain
+deployed to Cloudflare Pages.
 
 ## Verification
 
-The single verification command is:
+Run `make build` before considering any change done — it builds the
+`cv-builder` image, then the full local build (site + PDF + Markdown CV) in
+containers. For a site-only change, `make lint` + `make site` is enough until the
+final `make build`.
 
-```bash
-make build
-```
+## Build pipeline
 
-Run it before considering any change done. It builds the `resume-builder`
-toolchain image, then runs the full local build (site + local-only PDF and
-Markdown CV) inside containers.
+The toolchain is **100% containerized and Node-free**: Hugo (site), Typst (PDF),
+resvg (OG card), and the standalone Tailwind CSS CLI, all in the
+`cv-builder` image from the root `Dockerfile` (digest-pinned base, every tool
+download SHA-256 verified, built for `linux/amd64`).
 
-For quick iteration on a change that touches only the site (no PDF/Markdown CV),
-`make site` plus `make lint` is sufficient before a final `make build`:
+Tailwind is v4 with CSS-first config in `assets/css/main.css` (no
+`tailwind.config.js`). Hugo's built-in `css.TailwindCSS` is deliberately **not**
+used — since Hugo v0.161.0 it requires a Node-installed CLI. Instead `make css`
+compiles the stylesheet, and `layouts/_partials/fingerprinted.html` fingerprints
+the CSS and JS (hashed URL + Subresource Integrity) in production, emitting plain
+URLs in dev.
 
-```bash
-make lint   # shell, YAML, semgrep SAST (CI-safe; secrets scan is local-only)
-make site   # CSS, HTML, OG card — what CI/CD builds
-```
+- `make site` — `css` → `hugo` (into `dist/`) → `og`.
+- `make build` — `image` + `site` + `pdf` + `markdown`.
+- `make pdf` / `make markdown` — local-only artifacts under `generated/`.
+- `make private-data` — writes `CV_PHONE` from gitignored `.env` to
+  `local/private.json` (empty in CI).
+- `make dev` — Hugo live-reload server at `http://localhost:1313`, with the
+  Tailwind CLI in watch mode.
+- `make clean` / `make lint`.
 
-## Build Pipeline
+**The PDF and Markdown CV are workstation-local only.** CI runs `make site`
+(never `make build`). The Markdown CV source is `local/cv.md`, staged into
+`content/cv-markdown.md` only during `make markdown`; `content/cv-markdown.md` is
+gitignored and the `hugo` target refuses to build while it exists, so the
+deployed site never includes it. (It is staged as `cv-markdown.md` because
+`content/cv.md` is the web `/cv/` page.) Never wire `pdf`/`markdown` into CI.
 
-The project uses a **100% containerized, Node-free toolchain** powered by Zola
-(static site), Typst (PDF), resvg (OG card), and the standalone Tailwind CSS CLI
-— all inside the `resume-builder` container image built from the root `Dockerfile`.
-No Node.js, no `node_modules`. The image is built for `linux/amd64` (native on
-Intel Macs/Linux, Rosetta on Apple Silicon); the base image is digest-pinned and
-every tool download is SHA-256 verified.
+### Lint & hooks
 
-- `make site` — the deployable site, in order:
-  1. `make css` — Compiles Tailwind CSS (`styles/input.css` → `static/styles.css`)
-  2. `make zola` — Compiles the static HTML site into `dist/`
-  3. `make og` — Renders the resvg OpenGraph PNG card into `dist/generated/og/index.png`
-
-- `make build` — `image` + `site` + `pdf` + `markdown` (full local build).
-- `make pdf` — Compiles the Typst PDF resume into `generated/pdf/ian-montgomery-cv.pdf`
-  (outside the deployable `dist/`).
-- `make markdown` — Builds the Markdown CV by staging `local/cv.md` into
-  `content/cv.md` with `local/cv-config.toml` and flattens it into
-  `generated/markdown/ian-montgomery-cv.md` (the staged file is removed afterwards).
-- `make private-data` — Writes `RESUME_PHONE` from gitignored `.env` into
-  `local/private.json` (empty in CI). Consumed by the CV templates.
-- `make dev` — Boots the Zola live-reloading dev server at `http://localhost:4321`.
-
-**The PDF and Markdown CV are workstation-local only.** CI/CD runs `make site`
-(never `make build`), and the public site does not link to either artifact. The
-Markdown CV page is staged from `local/cv.md` only during `make markdown`;
-`content/cv.md` is gitignored and the `zola` target refuses to build if it is
-present, so the deployed `make site` build never includes it. Never wire the
-`pdf` or `markdown` targets into any CI workflow.
-
-### Lint targets
-
-`make lint` runs the CI-safe linters in sequence: `lint-shell` (ShellCheck on
-`scripts/`), `lint-yaml` (yamllint on `data/`, `.github/workflows/` and
-`lefthook.yml`), and `lint-semgrep` (Semgrep SAST via
-the `semgrep/semgrep` image, `--config=auto --error`). `lint-secrets` runs
-Betterleaks (`scripts/betterleaks-scan.sh`) and is **local only, not CI** — it
-needs a git common-dir mount so it works in worktrees.
-
-### Git hooks
-
-`lefthook.yml` wires the same checks into Git. `pre-commit` runs the shell,
-YAML, and Semgrep linters plus a staged Betterleaks scan; `pre-push` runs
-`make lint`, the full Betterleaks scan, and `make build`.
+`make lint` = `lint-shell` (ShellCheck on `scripts/`), `lint-yaml` (yamllint on
+`data/`, `.github/workflows/`, `lefthook.yml`), and `lint-semgrep` (Semgrep
+`--config=auto --error`). `lint-secrets` (Betterleaks) is local-only. `lefthook`
+runs these on `pre-commit` and `make lint` + `make build` on `pre-push`.
 
 ### Ignored artifacts
 
-Build output and local-only data are gitignored and must never be committed:
-`dist/`, `generated/`, `static/styles.css` (regenerated by `make css`),
-`content/cv.md` (staged only during `make markdown`), `local/private.json`,
-`.env*`, and the legacy `public/` directory. `make clean` removes the build
-artifacts. `AGENTS.md` itself is tracked in Git.
+`dist/`, `generated/`, `assets/css/styles.css`, `content/cv-markdown.md`,
+`local/private.json`, `.env*`, and the legacy `public/`. `AGENTS.md` is tracked.
 
-## Content Model
+## Content model
 
-Resume data lives in `data/*.yaml` and is the single source of truth consumed by
-all outputs. Dates are quoted strings (e.g. `"2023-12-01"`) so Zola, Tera, and
-Typst all treat them identically; unquoted YAML dates would be coerced to native
-timestamps by some parsers and change rendering.
+`data/*.yaml` is the single source of truth for every output. Dates are quoted
+strings (e.g. `"2023-12-01"`) so Hugo and Typst parse them identically.
 
-- `data/basics.yaml`, `data/jobs.yaml`, `data/education.yaml` — shared by
-  `templates/resume.html` (web resume, uses `bullets`) and
-  `templates/card.html` (card route, uses `basics` only),
-  `templates/cv.md` (Markdown CV, uses `bullets_pdf`), and
-  `templates/pdf/resume.typ` (PDF, uses `bullets_pdf`)
-- `data/skills.yaml` — single skill registry keyed by slug (names/icons/urls/
-  descriptions), plus ordered `categories` that group skill slugs for the resume
-  Skills section. Jobs/education reference skills by slug; `templates/resume.html`,
-  `templates/cv.md`, and `templates/pdf/resume.typ` resolve them against the
-  registry. Every skill must be defined once and referenced by slug.
-- `data/achievements.yaml` — certifications (web resume and Markdown CV; not the PDF)
+- `basics.yaml`, `jobs.yaml`, `education.yaml` — shared by
+  `layouts/cv.html` (web, uses `bullets`), `layouts/home.html`
+  (card, uses `basics`), `layouts/cv.md` (uses `bullets_pdf`), and
+  `build/pdf/cv.typ` (uses `bullets_pdf`).
+- `skills.yaml` — skill registry keyed by slug (names/urls/descriptions)
+  plus ordered `categories` grouping slugs. Jobs/education reference skills by
+  slug. The slug is the id; there is no separate `id` field.
+- `achievements.yaml` — certifications (web + Markdown CV; not the PDF).
 
-The phone number is deliberately **not** in `data/basics.yaml`. It is supplied at
-build time from `RESUME_PHONE` in the gitignored `.env`, written to the gitignored
-`local/private.json` by `make private-data`, and read by `templates/cv.md` and
-`templates/pdf/resume.typ` (guarded, so it is simply omitted when unset). Never
-commit the phone number or `local/private.json`.
+The phone number is **not** in `basics.yaml`: `make private-data` writes it to
+gitignored `local/private.json`, read by `layouts/cv.md` and
+`build/pdf/cv.typ` (guarded — omitted when unset). Never commit it.
 
-`content/` holds `_index.md` (the `/` card, `template = "card.html"`) and
-`resume.md` (the `/resume/` resume, `template = "resume.html"`). The Markdown CV
-page source lives at `local/cv.md` and is staged into `content/cv.md` only for
-`make markdown`. There are no job/education content pages by design. Templates
-use Tera (Zola's templating engine); see `templates/base.html`,
-`templates/card.html`, `templates/resume.html`, `templates/macros.html`, and
-`templates/og/card.svg`.
+`content/` holds `_index.md` (`/` card) and `cv.md` (`/cv/`). Templates
+are Go templates in `layouts/` — `baseof.html`, `home.html`,
+`cv.html`, `cv.md`, and partials (`skill-chip`,
+`skill-names`, `term`, `fingerprinted`, `css`, `js`). Named layouts live at the
+`layouts/` root (Hugo's post-v0.146 template system; no `_default/`). Internal
+page links use Hugo's `relref` and static assets use `relURL`, so an unresolved
+ref fails the build. After editing `data/*.yaml`, run `make lint-yaml` and
+`make build`.
 
-If you edit `data/*.yaml`, validate it with `make lint-yaml` and verify all
-template outputs still render (run `make build`).
+## Environment & containers
 
-## Environment & Containers
-
-- Everything runs via the host `Makefile` in the `resume-builder` container image —
-  no Node on the host or runner.
-- Container engine detection happens at Makefile parse time: Docker is preferred
-  on GitHub-hosted runners, Podman (rootless) on workstations where Podman is default.
-  Override with `CONTAINER_ENGINE=docker` / `CONTAINER_ENGINE=podman`.
-- SELinux hosts need the `:z` bind-mount relabel; GitHub-hosted ubuntu has no
-  SELinux, so CI sets `SELINUX_LABEL=""` and runs as the host user.
+- Container engine is chosen at Makefile parse time: an explicit
+  `CONTAINER_ENGINE` (command line or environment) wins, else the daemon that is
+  actually reachable (Docker on CI runners, else Podman). Override with
+  `make CONTAINER_ENGINE=podman …`.
+- SELinux hosts need the `:z` bind-mount relabel; GitHub ubuntu runners don't, so
+  CI runs as the host user.
 
 ## CI/CD
 
-- **GitHub Actions** (`.github/workflows/`):
-  - `check.yaml` — runs on pull requests; builds the image, `make lint`, then
-    `make site` (no PDF). On a GitHub-hosted ubuntu runner with Docker.
-  - `deploy.yaml` — on push to `main` (path-filtered to `content/`, `data/`,
-    `static/`, `styles/`, `templates/`, `config.toml`, `tailwind.config.js`,
-    `Dockerfile`, `Makefile`, and the workflow itself); builds the image,
-    `make site` (no PDF), then deploys `dist/` directly to Cloudflare Pages using
-    Wrangler (`cloudflare/wrangler-action`).
-    Requires repo secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
-    Target project is the `CLOUDFLARE_PROJECT_NAME` repository variable (no default;
-    the deploy is skipped when it is unset). Set it to the existing ianmontgomery.net
-    Pages project, whose Git integration is disconnected so this Action is the only deployer.
+- `check.yaml` — pull requests: build image, `make lint`, `make site`.
+- `deploy.yaml` — push to `main` (path-filtered): build image, `make site`, then
+  deploy `dist/` to Cloudflare Pages via `cloudflare/wrangler-action`. Needs
+  secrets `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` and the
+  `CLOUDFLARE_PROJECT_NAME` repo variable (deploy skipped when unset; the Pages
+  project's Git integration is disconnected so this Action is the only deployer).
+- Dependabot updates `github-actions` and `docker` weekly. The `Dockerfile`'s
+  `*_VERSION` ARGs are bumped manually alongside their `*_SHA256`.
 
-### Dependency updates
+## Deploy & Cloudflare Pages
 
-- **Dependabot** — `.github/dependabot.yml`, weekly updates for the
-  `github-actions` and `docker` ecosystems (with a cooldown).
-- Pinned tool versions in the `Dockerfile` (`ZOLA_VERSION`, `TYPST_VERSION`,
-  `RESVG_VERSION`, `TAILWIND_VERSION`) are updated manually: bump both the
-  version and the matching `*_SHA256` (see Common Workflows). There is no
-  Renovate config.
+Hosted at `https://ianmontgomery.net` (`hugo.toml` `baseURL`): `/` is the card,
+`/cv/` the CV. Pages serves `dist/`. `static/_headers` (CSP + immutable
+caching for hashed CSS/JS) and `static/_redirects` are copied in;
+`layouts/404.html` is served on 404. `static/_redirects` 301s the old
+`/resume/` paths to `/cv/`.
 
-## Deploy & Cloudflare Pages Configuration
+## Common workflows
 
-The site is hosted on Cloudflare Pages (free tier) at `https://ianmontgomery.net`
-(`config.toml` `base_url`): `/` is the digital business card, `/resume/` is the
-resume. This repo supersedes the standalone `ianmontgomery.net` repo.
-- Cloudflare Pages serves files from `dist/` generated by `make site`.
-- Security headers are configured in `static/_headers`, which Zola copies into
-  `dist/_headers`. (The Markdown CV is not deployed, so it has no header entry.)
-- Edge redirects are configured in `static/_redirects` (`dist/_redirects`).
-- Error pages are handled by Zola's generated `404.html` (`dist/404.html`), which Cloudflare Pages serves automatically on 404.
-
-## Common Workflows
-
-- **Edit resume content** → edit `data/*.yaml`, then `make lint-yaml` and `make build`
-  to confirm all outputs render.
-- **Update a pinned tool version** (Zola/Typst/resvg/Tailwind in `Dockerfile`) →
-  bump both the version and the matching `*_SHA256`.
-- **Local dev** → `make dev` for live reload; don't run Zola on the host.
-- **Clean artifacts** → `make clean` removes `dist/`, `generated/`,
-  `static/styles.css`, and any staged `content/cv.md`.
-- **Verify before finishing any change** → `make build`.
+- **Edit content** → `data/*.yaml`, then `make lint-yaml` and `make build`.
+- **Bump a pinned tool** → update the `*_VERSION` and matching `*_SHA256` in the
+  `Dockerfile`.
+- **Clean** → `make clean`.

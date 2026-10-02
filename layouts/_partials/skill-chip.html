@@ -1,0 +1,26 @@
+{{- /* Square skill chip. Takes a skill slug + a unique uid; falls back to the raw
+   slug when the skill isn't in the registry. */ -}}
+{{- $slug := .slug -}}
+{{- $uid := .uid -}}
+{{- $item := index hugo.Data.skills.skills $slug -}}
+{{- if $item -}}
+<li class="im-chip">
+  {{- if $item.url }}
+  <a
+    href="{{ $item.url | safeURL }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="im-chip__label"
+    >{{ $item.name }}</a
+  >
+  {{- else }}
+  <span class="im-chip__label">{{ $item.name }}</span>
+  {{- end }}
+  {{- with $item.description }}
+  <button type="button" data-target="popover-{{ $uid }}" class="im-chip__info" aria-label="More about {{ $item.name }}" aria-describedby="popover-{{ $uid }}">?</button>
+  <div id="popover-{{ $uid }}" data-popover role="tooltip" class="im-chip__popover" hidden>{{ . }}</div>
+  {{- end }}
+</li>
+{{- else -}}
+<li class="im-chip"><span class="im-chip__label">{{ $slug }}</span></li>
+{{- end -}}

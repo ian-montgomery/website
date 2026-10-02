@@ -4,14 +4,14 @@ Source for my personal site, [ianmontgomery.net](https://ianmontgomery.net)
 
 ## Stack
 
-- **Framework**: [Zola](https://www.getzola.org/) (static site generator, Tera templates)
-- **Styling**: Tailwind CSS (standalone CLI — no Node.js)
+- **Framework**: [Hugo](https://gohugo.io/) (static site generator, Go templates)
+- **Styling**: Tailwind CSS v4, standalone CLI with CSS-first config — no Node.js
 - **PDF / OG card**: Typst / resvg
 - **Hosting**: Cloudflare Pages, deployed from GitHub Actions
-- **Toolchain**: a single container image (`resume-builder`) built from the `Dockerfile`; no Node.js or `node_modules`
+- **Toolchain**: a single container image (`cv-builder`) built from the `Dockerfile`; no Node.js or `node_modules`
 
-Resume content lives in `data/*.yaml` and is the single source of truth for the
-web resume, the local PDF, and the local Markdown CV.
+CV content lives in `data/*.yaml` and is the single source of truth for the
+web CV, the local PDF, and the local Markdown CV.
 
 ## Build
 
@@ -19,22 +19,29 @@ Requires Docker or Podman and `make`:
 
 ```bash
 make site    # deployable site (CSS, HTML, OG card) into dist/
-make dev     # live-reloading dev server at http://localhost:4321
+make dev     # live-reloading dev server at http://localhost:1313 (Hugo + Tailwind watch)
 make build   # site + local-only PDF and Markdown CV
 make lint    # shell, YAML, and SAST checks
 ```
 
 The PDF and Markdown CV are generated locally only and are never deployed. To
 include a phone number in them, copy `.env.example` to `.env` and set
-`RESUME_PHONE`.
+`CV_PHONE`.
 
 ## Structure
 
-- `data/*.yaml` — resume content
-- `content/` — page routes
-- `templates/` — Tera templates
+- `data/*.yaml` — CV content (Hugo data files, shared with the PDF/Markdown CV)
+- `content/` — page routes (`/` card and `/cv/`)
+- `layouts/` — Hugo templates (base template, home/CV layouts, partials, output formats)
+- `assets/` — Hugo Pipes resources: `assets/css/main.css` (Tailwind v4 source) and `assets/js/app.js`
+- `build/` — inputs for the external renderers: `build/og/card.svg` (resvg) and `build/pdf/cv.typ` (Typst)
 - `static/` — assets, headers, redirects
-- `styles/input.css` — Tailwind source
 - `Dockerfile` / `Makefile` — containerized build toolchain
+
+`make css` compiles `assets/css/main.css` to `assets/css/styles.css`, which Hugo
+fingerprints (cache-busted URL + Subresource Integrity) via
+`layouts/_partials/css.html`; `assets/js/app.js` is fingerprinted the same way.
+`static/_headers` sets the CSP and long-lived caching for the hashed CSS/JS and
+the fonts.
 
 Deploys run from `.github/workflows/deploy.yaml` on push to `main`.

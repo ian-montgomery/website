@@ -1,0 +1,23 @@
+baseURL = "https://ianmontgomery.net/"
+title = "Ian Montgomery - Infrastructure Engineer"
+
+# Keep the generated markup identical to the pre-Hugo build.
+disableHugoGeneratorInject = true
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "RSS"]
+
+[params]
+  description = "Infrastructure Engineer with a proven track record of driving operational excellence and rapid software delivery. I have worked with companies such as Xero, EndGame, and Epi-interactive."
+  og_description = "Infrastructure Engineer with a proven track record of driving operational excellence and rapid software delivery. Combining leadership experience across multiple industries with a passion for technology."
+
+# Local-only Markdown CV output (see `make markdown`).
+[mediaTypes]
+  [mediaTypes."text/markdown"]
+    suffixes = ["md"]
+
+[outputFormats]
+  [outputFormats.cv]
+    mediaType = "text/markdown"
+    isPlainText = true
+    isHTML = false
+    baseName = "ian-montgomery-cv"

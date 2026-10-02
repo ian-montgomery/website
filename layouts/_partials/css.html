@@ -1,0 +1,3 @@
+{{- /* Compiled Tailwind (assets/css/styles.css). */ -}}
+{{- $css := partial "fingerprinted.html" "css/styles.css" -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }} />

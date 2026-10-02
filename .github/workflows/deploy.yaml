@@ -24,10 +24,9 @@ on:
       - 'content/**'
       - 'data/**'
       - 'static/**'
-      - 'styles/**'
-      - 'templates/**'
-      - 'config.toml'
-      - 'tailwind.config.js'
+      - 'layouts/**'
+      - 'assets/**'
+      - 'hugo.toml'
       - 'Dockerfile'
       - 'Makefile'
       - '.github/workflows/deploy.yaml'
@@ -51,7 +50,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
-      - name: Build static site (CSS, HTML, OG card, Markdown CV — no PDF)
+      - name: Build static site (CSS, HTML, OG card — no PDF)
         run: |
           set -euo pipefail
           make image

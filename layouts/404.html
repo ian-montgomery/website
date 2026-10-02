@@ -1,0 +1,34 @@
+{{ define "title" }}404 — Not Found{{ end }}
+{{ define "description" }}The page you were looking for does not exist.{{ end }}
+
+{{ define "main" }}
+<main id="main" class="im-card-stage im-crisp">
+  <div class="im-card">
+    <p class="im-card__role">&gt; HTTP 404<span class="im-cursor" aria-hidden="true"></span></p>
+    <h1 class="im-card__name">Not Found</h1>
+    <div class="im-dither w-full" aria-hidden="true"></div>
+
+    <section class="im-card__contact" aria-labelledby="notfound-heading">
+      <h2 class="im-card__contact-head" id="notfound-heading">Lost</h2>
+      <dl class="im-card__rows">
+        <div class="im-card__row">
+          <dt>Status:</dt>
+          <dd>This page does not exist.</dd>
+        </div>
+        <div class="im-card__row">
+          <dt>Home:</dt>
+          <dd><a href="{{ site.Home.RelPermalink }}">ianmontgomery.net</a></dd>
+        </div>
+        <div class="im-card__row">
+          <dt>CV:</dt>
+          <dd><a href="{{ relref . "cv" }}">Curriculum Vitae</a></dd>
+        </div>
+      </dl>
+    </section>
+
+    <footer class="im-card__foot">
+      <p>&copy; IM {{ now.Format "2006" }}</p>
+    </footer>
+  </div>
+</main>
+{{ end }}
