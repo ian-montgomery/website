@@ -4,7 +4,7 @@
 # Versions are pinned by ARG; every download is verified against a hardcoded
 # SHA-256. Bump a *_VERSION and its *_SHA256 together.
 
-FROM debian:trixie-slim@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a AS tools
+FROM debian:trixie-slim@sha256:a29215f6a35e51e22adffa17f89e9d2ef06214e64a2bad10d765c46aea49f11f AS tools
 
 ARG HUGO_VERSION=0.167.0
 ARG HUGO_SHA256=4d84519b9f619e6d4c3fb45a50157abeabeb724f859c60605f44c23def6e1169
@@ -38,7 +38,7 @@ RUN curl -fsSL -o /usr/local/bin/tailwindcss "https://github.com/tailwindlabs/ta
 # fonts-liberation -> Typst PDF ("Liberation Sans"); fonts-dejavu-core -> resvg
 # OG card ("DejaVu Sans Mono"). The website's IBM Plex Mono is self-hosted and
 # bundled with the site, so it is not installed here.
-FROM debian:trixie-slim@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a AS runtime
+FROM debian:trixie-slim@sha256:a29215f6a35e51e22adffa17f89e9d2ef06214e64a2bad10d765c46aea49f11f AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       shellcheck \
